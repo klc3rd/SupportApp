@@ -47,6 +47,10 @@
       outline: 1px solid rgba($color-primary-100, 0.75);
     }
 
+    &-input::placeholder {
+      color: $color-primary-100;
+    }
+
     &-btn {
       @include font-heading(400);
       font-weight: 300;

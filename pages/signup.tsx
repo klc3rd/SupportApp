@@ -24,7 +24,6 @@ const signupPage = () => {
                 name="user"
                 icon="profile"
               />
-
               <AuthInput
                 placeholder="Email Address"
                 type="text"
