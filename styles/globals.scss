@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100;300;400;500&family=Montserrat:wght@100;300;400;500&display=swap");
+@import "./utils/sizes"; // For sizes such as screen width
+@import "./utils/colors";
+@import "./utils/fonts"; // Mixins for setting font and size
+@import "./utils/elements"; // This is for UI elements
+
+// Components
+@import "./components/root";
+@import "./components/auth-form";
+
+// Pages
+@import "./pages/login";
+@import "./pages/signup";

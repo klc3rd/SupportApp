@@ -1,0 +1,91 @@
+.auth {
+  &__panel {
+    position: relative;
+    padding: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40vw;
+    z-index: 1;
+
+    @media (max-width: $screen-width-medium) {
+      width: 50vw;
+    }
+
+    @media (max-width: $screen-width-small) {
+      position: absolute;
+      height: 100vh;
+      width: 100vw;
+    }
+  }
+
+  &__box {
+    width: 60rem;
+    max-width: 60rem;
+    border-radius: 25px;
+    padding: 2rem 5rem;
+    background-color: rgba($color-form, 0.9);
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin: 3rem 0;
+    border-bottom: 2px solid $color-secondary-300;
+
+    &-input {
+      width: 100%;
+      @include font-heading(400);
+      color: $color-primary-100;
+      border: 0;
+      padding: 1rem;
+      background: transparent;
+    }
+
+    &-input:focus {
+      outline: 1px solid rgba($color-primary-100, 0.75);
+    }
+
+    &-btn {
+      @include font-heading(400);
+      font-weight: 300;
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      border-radius: 10px;
+      background-color: $color-grey-100;
+      border: 1px solid $color-primary-100;
+      color: $color-primary-300;
+      transition: all 0.1s;
+    }
+
+    &-btn:hover {
+      cursor: pointer;
+      background-color: $color-primary-100;
+      color: $color-grey-100;
+    }
+
+    &-btn:active {
+      transform: translate(-2px, -2px);
+      box-shadow: 1px 1px 10px $color-black;
+    }
+  }
+
+  &-link {
+    width: 100%;
+    display: inline-block;
+    text-align: right;
+
+    cursor: pointer;
+    padding: 1rem 0.5rem 0 0;
+    @include font-paragraph(100);
+    color: $color-primary-100;
+    text-decoration: none;
+  }
+
+  &-link:hover {
+    color: $color-primary-300;
+    text-decoration: underline;
+  }
+}
