@@ -17,3 +17,9 @@ $color-grey-300: #314578;
 $color-form: #d1d8e9;
 
 $color-black: #000717;
+$color-error: #c0392b;
+
+.error {
+  @include font-paragraph(200);
+  color: $color-error;
+}

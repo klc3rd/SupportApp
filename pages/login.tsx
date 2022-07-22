@@ -13,7 +13,7 @@ import React from "react";
 
 import TransitionContainer from "../components/motion/transition-container";
 
-const loginPage = () => {
+const LoginPage: React.FC = () => {
   // Handle login
   const loginHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -60,4 +60,5 @@ const loginPage = () => {
   );
 };
 
-export default loginPage;
+LoginPage.displayName = "LoginPage";
+export default LoginPage;
