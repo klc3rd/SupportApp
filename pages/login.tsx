@@ -1,3 +1,7 @@
+/**
+ * Login page, index will direct to this page if there is not an active session
+ */
+
 import Image from "next/image";
 import AuthInput from "../components/ui/auth/input";
 import AuthButton from "../components/ui/auth/button";
@@ -10,12 +14,14 @@ import React from "react";
 import TransitionContainer from "../components/motion/transition-container";
 
 const loginPage = () => {
+  // Handle login
   const loginHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     console.log("Form works");
   };
 
+  // Return login component
   return (
     <TransitionContainer>
       <div className="login">

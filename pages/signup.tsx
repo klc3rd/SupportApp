@@ -1,3 +1,6 @@
+/**
+ * User registration page
+ */
 import Image from "next/image";
 import Link from "next/link";
 import signupBG from "../assets/signup-bg.jpg";
@@ -8,10 +11,12 @@ import AuthButton from "../components/ui/auth/button";
 import TransitionContainer from "../components/motion/transition-container";
 
 const signupPage = () => {
+  // Handle signup
   const signupHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
+  // Return signup page
   return (
     <TransitionContainer>
       <div className="signup">
@@ -39,7 +44,7 @@ const signupPage = () => {
               <AuthInput
                 placeholder="Confirm Password"
                 type="password"
-                name="confirm-password"
+                name="passwordConfirmation"
                 icon="lock"
               />
               <AuthButton>Register</AuthButton>
