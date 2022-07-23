@@ -4,11 +4,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
 import fs from "fs";
-import Err from "../../lib/Err";
+import Err from "../../../lib/Err";
 
 // Import user model and connection function
-import { connectToDB } from "../../lib/db/db";
-import User from "../../lib/db/schemas/Users";
+import { connectToDB } from "../../../lib/db/db";
+import User from "../../../lib/db/schemas/Users";
 
 /**
  * Handle user creation
@@ -22,7 +22,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       await connectToDB();
 
       const { username, email, password, passwordConfirmation } = req.body;
-      console.log(username, email, password, passwordConfirmation);
 
       // Check if username or email exists
       const usernameInUse = await User.findOne({ username: username });

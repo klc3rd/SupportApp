@@ -1,4 +1,5 @@
 import "../styles/globals.scss";
+import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import type { AppProps } from "next/app";
 
@@ -12,7 +13,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="An app for handling IT Support help desk tickets"
         />
       </Head>
-      <Component {...pageProps} />
+      <SessionProvider>
+        <Component {...pageProps} />
+      </SessionProvider>
     </>
   );
 }

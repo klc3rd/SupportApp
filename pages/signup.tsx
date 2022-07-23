@@ -53,6 +53,13 @@ const SignupPage: React.FC = () => {
       return;
     }
 
+    // Check that email is in the correct format
+    const emailRegex = new RegExp(/[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/gim);
+    if (!emailRegex.test(email!)) {
+      setEmailError("Email must be in the correct format");
+      return;
+    }
+
     // Check that the password and password confirmation match
     if (password != passwordConfirmation) {
       setPasswordError("Password and password confirmation do not match");
@@ -68,7 +75,7 @@ const SignupPage: React.FC = () => {
     /**
      * Send request to create user
      */
-    fetch("/api/signup", {
+    fetch("/api/auth/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
