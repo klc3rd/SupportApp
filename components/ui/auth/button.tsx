@@ -1,10 +1,11 @@
 interface iButton {
   children: string;
+  onClick?: () => void;
 }
 const AuthButton: React.FC<iButton> = (props) => {
-  const { children } = props;
+  const { children, onClick } = props;
   return (
-    <button className="auth__container-btn" type="submit">
+    <button className="auth__container-btn" type="submit" onClick={onClick}>
       {children}
     </button>
   );

@@ -27,8 +27,8 @@ const LoginPage: React.FC = () => {
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   // Handle login
-  const loginHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const loginHandler = () => {
+    console.log("test");
     const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
 
@@ -46,11 +46,18 @@ const LoginPage: React.FC = () => {
 
     signIn("credentials", { redirect: false, username, password }).then(
       (response) => {
-        if (!response) {
+        if (response!.status != 200) {
           setGeneralError("Invalid username or password");
+          return;
         }
+        setGeneralError(null);
       }
     );
+  };
+
+  // Disable the form submission as I need to process via the login button
+  const formDisable = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
   };
 
   // Return login component
@@ -67,7 +74,7 @@ const LoginPage: React.FC = () => {
         </div>
         <div className="auth__panel">
           <div className="auth__box">
-            <form onSubmit={loginHandler}>
+            <form onSubmit={formDisable}>
               <AuthInput
                 placeholder="Username"
                 type="text"
@@ -89,7 +96,7 @@ const LoginPage: React.FC = () => {
                 <span className="error">{passwordError}</span>
                 <p />
               </>
-              <AuthButton>Login</AuthButton>
+              <AuthButton onClick={loginHandler}>Login</AuthButton>
             </form>
             {generalError && <span className="error">{generalError}</span>}
             <Link href="/signup">

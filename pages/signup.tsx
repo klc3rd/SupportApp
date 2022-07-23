@@ -27,14 +27,12 @@ const SignupPage: React.FC = () => {
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
   // Handle signup
-  const signupHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const signupHandler = () => {
     // Reset error states after submitting form
     setUserError(null);
     setEmailError(null);
     setPasswordError(null);
     setGeneralError(null);
-
-    event.preventDefault();
 
     const username = usernameRef.current?.value;
     const email = emailRef.current?.value;
@@ -103,11 +101,16 @@ const SignupPage: React.FC = () => {
     });
   };
 
+  // Disable the form submission as I need to process via the login button
+  const formDisable = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
   /**
    * Temporary
    */
   useEffect(() => {
-    console.log(userCreated);
+    // this will handle signing in after the user is registered
   }, [userCreated]);
 
   // Return signup page
@@ -116,7 +119,7 @@ const SignupPage: React.FC = () => {
       <div className="signup">
         <div className="auth__panel">
           <div className="auth__box">
-            <form onSubmit={signupHandler}>
+            <form onSubmit={formDisable}>
               <AuthInput
                 placeholder="Username"
                 type="text"
@@ -166,7 +169,7 @@ const SignupPage: React.FC = () => {
                 </>
               )}
 
-              <AuthButton>Register</AuthButton>
+              <AuthButton onClick={signupHandler}>Register</AuthButton>
             </form>
             {generalError && <span className="error">{generalError}</span>}
             <Link href="/login">
