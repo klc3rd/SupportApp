@@ -2,6 +2,7 @@
  * Login page, index will direct to this page if there is not an active session
  */
 import { useRef, useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import AuthInput from "../components/ui/auth/input";
 import AuthButton from "../components/ui/auth/button";
@@ -15,6 +16,8 @@ import { signIn } from "next-auth/react";
 import TransitionContainer from "../components/motion/transition-container";
 
 const LoginPage: React.FC = () => {
+  const router = useRouter();
+
   // userError and passwordError are not for login api response, they
   // are purely for ensuring the fields are filled
   const [userError, setUserError] = useState<string | null>(null);
@@ -22,6 +25,8 @@ const LoginPage: React.FC = () => {
 
   // generalError are for api response errors, such as incorrect credentials
   const [generalError, setGeneralError] = useState<string | null>(null);
+
+  const [loginStatus, setloginStatus] = useState<boolean>(false);
 
   const usernameRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -51,6 +56,8 @@ const LoginPage: React.FC = () => {
           return;
         }
         setGeneralError(null);
+        setloginStatus(true);
+        router.push("/");
       }
     );
   };
@@ -96,7 +103,9 @@ const LoginPage: React.FC = () => {
                 <span className="error">{passwordError}</span>
                 <p />
               </>
-              <AuthButton onClick={loginHandler}>Login</AuthButton>
+              <AuthButton onClick={loginHandler} disabled={loginStatus}>
+                {loginStatus ? "Logging in" : "Login"}
+              </AuthButton>
             </form>
             {generalError && <span className="error">{generalError}</span>}
             <Link href="/signup">

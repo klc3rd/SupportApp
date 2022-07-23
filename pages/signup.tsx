@@ -1,7 +1,10 @@
 /**
  * User registration page
  */
-import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useState, useRef } from "react";
+import { signIn } from "next-auth/react";
+
 import Image from "next/image";
 import Link from "next/link";
 import signupBG from "../assets/signup-bg.jpg";
@@ -12,13 +15,15 @@ import AuthButton from "../components/ui/auth/button";
 import TransitionContainer from "../components/motion/transition-container";
 
 const SignupPage: React.FC = () => {
+  const router = useRouter();
   // Store error messages, for each category of error so it can
   // be placed in the appropriate place
   const [userError, setUserError] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [generalError, setGeneralError] = useState<string | null>(null);
-  const [userCreated, setUserCreated] = useState<boolean>(false);
+
+  const [registrationStatus, setRegistrationStatus] = useState<boolean>(false);
 
   // Form reference
   const usernameRef = useRef<HTMLInputElement | null>(null);
@@ -27,7 +32,7 @@ const SignupPage: React.FC = () => {
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
   // Handle signup
-  const signupHandler = () => {
+  const signupHandler = async () => {
     // Reset error states after submitting form
     setUserError(null);
     setEmailError(null);
@@ -70,10 +75,8 @@ const SignupPage: React.FC = () => {
       return;
     }
 
-    /**
-     * Send request to create user
-     */
-    fetch("/api/auth/signup", {
+    // Register usuer
+    const response = await fetch("/api/auth/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,34 +87,30 @@ const SignupPage: React.FC = () => {
         password: password,
         passwordConfirmation: passwordConfirmation,
       }),
-    }).then((response) => {
-      // If there is an error, parse JSON and return error
-      if (response.status != 200) {
-        response.json().then((data) => {
-          setGeneralError(data.message);
-          return;
-        });
-      } else {
-        // If there is no error, return api response and set
-        // userCreated state to true
-        response.json().then((data) => {
-          setUserCreated(true);
-        });
-      }
     });
+
+    if (response.status != 200) {
+      const data = await response.json();
+      setGeneralError(data.message);
+      return;
+    }
+
+    // Sign in based on registered info then redirect page
+    setRegistrationStatus(true);
+    await signIn("credentials", {
+      redirect: false,
+      username,
+      password,
+    });
+
+    setGeneralError(null);
+    router.push("/");
   };
 
   // Disable the form submission as I need to process via the login button
   const formDisable = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
-
-  /**
-   * Temporary
-   */
-  useEffect(() => {
-    // this will handle signing in after the user is registered
-  }, [userCreated]);
 
   // Return signup page
   return (
@@ -169,7 +168,9 @@ const SignupPage: React.FC = () => {
                 </>
               )}
 
-              <AuthButton onClick={signupHandler}>Register</AuthButton>
+              <AuthButton onClick={signupHandler} disabled={registrationStatus}>
+                {registrationStatus ? "Registered, logging in..." : "Register"}
+              </AuthButton>
             </form>
             {generalError && <span className="error">{generalError}</span>}
             <Link href="/login">

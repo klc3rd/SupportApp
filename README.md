@@ -1,3 +1,5 @@
+DB_CONNECTION=mongodb+srv://klc3rd:59voUT5JzYPDRQYd@cluster0.k4rzi.mongodb.net/support-app?retryWrites=true&w=majority
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

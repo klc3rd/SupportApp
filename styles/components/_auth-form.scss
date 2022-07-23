@@ -64,6 +64,12 @@
       transition: all 0.1s;
     }
 
+    &-btn:disabled {
+      color: $color-grey-200;
+      border-color: $color-grey-200;
+      pointer-events: none;
+    }
+
     &-btn:hover {
       cursor: pointer;
       background-color: $color-primary-100;
