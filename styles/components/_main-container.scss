@@ -5,16 +5,19 @@
   flex-direction: column;
   align-items: center;
 
+  // This is the bar the menu sits inside of
   &__menubox {
     display: flex;
     justify-content: center;
     width: 100%;
     background-color: $color-grey-200;
 
+    // The menu itself
     &-menu {
       display: flex;
       padding: 3rem 1rem;
       justify-content: space-between;
+      align-items: center;
       width: 100%;
       max-width: $container-width;
 

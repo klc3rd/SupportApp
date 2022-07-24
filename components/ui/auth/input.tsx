@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ProfileIcon, LockIcon, MailIcon } from "../icons";
+import ShowIcon from "../icons";
 
 interface iInput {
   type: string;
@@ -33,9 +33,7 @@ const AuthInput: React.FC<iInput> = React.forwardRef((props, ref) => {
         onChange={onChange}
         ref={ref}
       />
-      {icon && icon == "profile" && <ProfileIcon />}
-      {icon && icon == "lock" && <LockIcon onClick={showPasswordHandler} />}
-      {icon && icon == "mail" && <MailIcon />}
+      {icon && <ShowIcon icon={icon} onClick={showPasswordHandler} />}
     </div>
   );
 });

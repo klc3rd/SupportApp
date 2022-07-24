@@ -1,10 +1,24 @@
 .form-icon {
   width: 2.4rem;
   height: 2.4rem;
-  margin: 1rem;
+  margin: 1rem 0.5rem 0.5rem 0.5rem;
   fill: $color-primary-100;
 }
 
 .form-icon:active {
   fill: $color-primary-300;
+}
+
+// UI Elements
+.ui {
+  &-btn {
+    @include font-heading(400);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem 0.5rem 2rem;
+    border-radius: 10px;
+    border: 2px solid $color-primary-300;
+    color: $color-primary-300;
+  }
 }

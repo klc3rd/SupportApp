@@ -1,5 +1,5 @@
 declare module "user-types" {
-  export interface IUser {
+  interface IUser {
     username: string;
     email: string;
     password: string;
@@ -8,7 +8,7 @@ declare module "user-types" {
   }
 
   // Returns user info without the password hash
-  export interface ISecuredUser {
+  interface ISecuredUser {
     id: string;
     username: string;
     email: string;
