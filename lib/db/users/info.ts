@@ -1,15 +1,16 @@
 /**
- * This provides a function to retrieve a users role
- * and username
+ * This file contains functions for getting Users
+ * through various methods
  */
-import { connectToDB } from "../db";
-import User from "../schemas/Users";
 
-export const getInfoByEmail = async (email: string) => {
+import { connectToDB } from "../db";
+import User, { iUser } from "../schemas/Users";
+
+export const getUserByEmail = async (email: string) => {
   // connect to DB
   await connectToDB();
 
-  const foundUser = await User.findOne({ email: email });
+  const foundUser: iUser | null = await User.findOne({ email: email });
 
   return foundUser;
 };

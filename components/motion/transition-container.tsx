@@ -6,7 +6,7 @@
 import { motion } from "framer-motion";
 
 interface iMotionContainer {
-  children: React.ReactElement;
+  children: JSX.Element | JSX.Element[];
 }
 
 const TransitionContainer: React.FC<iMotionContainer> = (props) => {

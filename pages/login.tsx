@@ -26,6 +26,7 @@ const LoginPage: React.FC = () => {
   // generalError are for api response errors, such as incorrect credentials
   const [generalError, setGeneralError] = useState<string | null>(null);
 
+  // To update the page when the user is registered and login is being processed
   const [loginStatus, setloginStatus] = useState<boolean>(false);
 
   const usernameRef = useRef<HTMLInputElement | null>(null);
@@ -51,15 +52,25 @@ const LoginPage: React.FC = () => {
 
     signIn("credentials", { redirect: false, username, password }).then(
       (response) => {
+        setloginStatus(true);
+
         if (response!.status != 200) {
           setGeneralError("Invalid username or password");
+          passwordRef.current!.value = "";
+          setloginStatus(false);
           return;
         }
         setGeneralError(null);
-        setloginStatus(true);
         router.push("/");
       }
     );
+  };
+
+  // Clears errors when typing
+  const cancelErrors = () => {
+    setUserError(null);
+    setPasswordError(null);
+    setGeneralError(null);
   };
 
   // Disable the form submission as I need to process via the login button
@@ -88,7 +99,7 @@ const LoginPage: React.FC = () => {
                 name="user"
                 icon="profile"
                 ref={usernameRef}
-                onChange={() => setUserError(null)}
+                onChange={cancelErrors}
               />
               {userError && <span className="error">{userError}</span>}
               <AuthInput
@@ -97,7 +108,7 @@ const LoginPage: React.FC = () => {
                 name="user"
                 icon="lock"
                 ref={passwordRef}
-                onChange={() => setPasswordError(null)}
+                onChange={cancelErrors}
               />
               <>
                 <span className="error">{passwordError}</span>

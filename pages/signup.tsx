@@ -107,6 +107,14 @@ const SignupPage: React.FC = () => {
     router.push("/");
   };
 
+  // Clears errors when typing
+  const cancelErrors = () => {
+    setUserError(null);
+    setEmailError(null);
+    setPasswordError(null);
+    setGeneralError(null);
+  };
+
   // Disable the form submission as I need to process via the login button
   const formDisable = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -125,9 +133,7 @@ const SignupPage: React.FC = () => {
                 name="user"
                 icon="profile"
                 ref={usernameRef}
-                onChange={() => {
-                  setUserError(null);
-                }}
+                onChange={cancelErrors}
               />
               {userError && <span className="error">{userError}</span>}
               <AuthInput
@@ -136,9 +142,7 @@ const SignupPage: React.FC = () => {
                 name="email"
                 icon="mail"
                 ref={emailRef}
-                onChange={() => {
-                  setEmailError(null);
-                }}
+                onChange={cancelErrors}
               />
               {emailError && <span className="error">{emailError}</span>}
               <AuthInput
@@ -147,9 +151,7 @@ const SignupPage: React.FC = () => {
                 name="user"
                 icon="lock"
                 ref={passwordRef}
-                onChange={() => {
-                  setPasswordError(null);
-                }}
+                onChange={cancelErrors}
               />
               <AuthInput
                 placeholder="Confirm Password"
@@ -157,9 +159,7 @@ const SignupPage: React.FC = () => {
                 name="passwordConfirmation"
                 icon="lock"
                 ref={confirmPasswordRef}
-                onChange={() => {
-                  setPasswordError(null);
-                }}
+                onChange={cancelErrors}
               />
               {passwordError && (
                 <>
