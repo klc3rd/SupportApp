@@ -34,7 +34,6 @@ const LoginPage: React.FC = () => {
 
   // Handle login
   const loginHandler = () => {
-    console.log("test");
     const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
 

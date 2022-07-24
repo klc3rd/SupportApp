@@ -6,8 +6,6 @@
 import { getSession, signOut } from "next-auth/react";
 import { Session } from "next-auth";
 import type { NextApiRequest } from "next";
-import TransitionContainer from "../components/motion/transition-container";
-import { getUserByEmail } from "../lib/db/users/info";
 
 // Get page elements
 import MainContainer from "../components/main-container";
@@ -21,19 +19,17 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
   const role = props.userRole;
 
   return (
-    <TransitionContainer>
-      <MainContainer role={role}>
-        <h1>Test home page!</h1>
-        <h2>You are a {role}</h2>
-        <button
-          onClick={() => {
-            signOut();
-          }}
-        >
-          Sign Out
-        </button>
-      </MainContainer>
-    </TransitionContainer>
+    <MainContainer role={role}>
+      <h1>Test home page!</h1>
+      <h2>You are a {role}</h2>
+      <button
+        onClick={() => {
+          signOut();
+        }}
+      >
+        Sign Out
+      </button>
+    </MainContainer>
   );
 };
 
@@ -46,11 +42,10 @@ export const getServerSideProps = async (context: { req: NextApiRequest }) => {
   // Get currently logged in user's role and email
   // if unsuccessful, forward to login page
   if (session && session.user?.email) {
-    const user = await getUserByEmail(session.user.email);
     return {
       props: {
-        userRole: user?.role,
-        userEmail: user?.email,
+        userRole: session.user.role,
+        userEmail: session.user.email,
       },
     };
   } else {

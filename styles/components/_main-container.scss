@@ -1,0 +1,44 @@
+.main-container {
+  $container-width: 120rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__menubox {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: $color-grey-200;
+
+    &-menu {
+      display: flex;
+      padding: 3rem 1rem;
+      justify-content: space-between;
+      width: 100%;
+      max-width: $container-width;
+
+      &-link,
+      &-link:visited {
+        display: inline-block;
+        margin: 0 1.5rem;
+        @include font-heading(400);
+        color: $color-primary-300;
+        cursor: pointer;
+      }
+
+      &-link:hover {
+        color: $color-primary-100;
+      }
+
+      &-link:active {
+        color: $color-primary-200;
+      }
+    }
+  }
+
+  &__body {
+    width: 100%;
+    max-width: $container-width;
+  }
+}
