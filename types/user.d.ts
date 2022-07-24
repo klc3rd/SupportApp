@@ -4,6 +4,7 @@ declare module "user-types" {
     email: string;
     password: string;
     role: string;
+    [key: string]: string;
   }
 
   // Returns user info without the password hash

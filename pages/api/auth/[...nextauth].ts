@@ -4,7 +4,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToDB } from "../../../lib/db/db";
-import Users, { iUser } from "../../../lib/db/schemas/Users";
+
 import {
   getUserByUsername,
   getSecureByEmail,
