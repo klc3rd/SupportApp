@@ -25,6 +25,8 @@ export const getUserByUsername = async (username: string) => {
   return foundUser;
 };
 
+// This is the same as getUserByUsername except that it does not return
+// the password hash, this is meaant for use in the client
 export const getSecureByEmail = async (email: string) => {
   // connect to DB
   await connectToDB();

@@ -16,6 +16,7 @@ import TransitionContainer from "../components/motion/transition-container";
 
 const SignupPage: React.FC = () => {
   const router = useRouter();
+
   // Store error messages, for each category of error so it can
   // be placed in the appropriate place
   const [userError, setUserError] = useState<string | null>(null);
