@@ -21,4 +21,12 @@
     border: 2px solid $color-primary-300;
     color: $color-primary-300;
   }
+
+  &-btn:hover {
+    background-color: $color-grey-200;
+  }
+
+  &-btn:active {
+    background-color: $color-grey-100;
+  }
 }

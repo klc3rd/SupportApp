@@ -4,14 +4,11 @@ import Link from "next/link";
 
 interface IMenu {
   role: string;
+  submitRequestHandler: () => void;
 }
 
 const Menu: React.FC<IMenu> = (props) => {
-  const { role } = props;
-
-  const submitRequestHandler = () => {
-    console.log("It works!");
-  };
+  const { role, submitRequestHandler } = props;
 
   return (
     <div className="main-container__menubox">

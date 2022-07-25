@@ -4,8 +4,10 @@
  *******************************/
 
 import { getSession, signOut } from "next-auth/react";
+import { useState } from "react";
 import { Session } from "next-auth";
 import type { NextApiRequest } from "next";
+import AddRequest from "../components/addrequest";
 
 // Get page elements
 import MainContainer from "../components/main-container";
@@ -18,17 +20,36 @@ interface iIndexPage {
 const IndexPage: React.FC<iIndexPage> = (props) => {
   const role = props.userRole;
 
+  // If true, addRequest shows an overlay and modal for adding a request
+  const [addRequest, setAddRequest] = useState<boolean>(false);
+
+  // submitRequestHandler and closeAddRequest open and close the
+  // new request modal and overlay
+  const submitRequestHandler = () => {
+    setAddRequest(true);
+  };
+  const closeAddRequest = () => {
+    setAddRequest(false);
+  };
+
+  /**
+   * Return main page
+   */
+
   return (
-    <MainContainer role={role}>
-      <h1>Test home page!</h1>
-      <h2>You are a {role}</h2>
-      <button
-        onClick={() => {
-          signOut();
-        }}
-      >
-        Sign Out
-      </button>
+    <MainContainer submitRequestHandler={submitRequestHandler} role={role}>
+      <>
+        {addRequest && <AddRequest closeHandler={closeAddRequest} />}
+        <h1>Test home page!</h1>
+        <h2>You are a {role}</h2>
+        <button
+          onClick={() => {
+            signOut();
+          }}
+        >
+          Sign Out
+        </button>
+      </>
     </MainContainer>
   );
 };
