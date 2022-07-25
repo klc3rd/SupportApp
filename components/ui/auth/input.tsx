@@ -1,3 +1,6 @@
+/**
+ * This input is a form element that is specifically for logging in and signing up
+ */
 import React, { useState } from "react";
 import ShowIcon from "../icons";
 

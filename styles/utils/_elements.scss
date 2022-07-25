@@ -1,12 +1,40 @@
-.form-icon {
-  width: 2.4rem;
-  height: 2.4rem;
-  margin: 1rem 0.5rem 0.5rem 0.5rem;
-  fill: $color-primary-100;
-}
+// The form elements in this section are for a standard form, login and signup
+// form elements are in _auth-form.scss
+.form {
+  &-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: 1rem 0.5rem 0.5rem 0.5rem;
+    fill: $color-primary-100;
+  }
 
-.form-icon:active {
-  fill: $color-primary-300;
+  &-icon:active {
+    fill: $color-primary-300;
+  }
+
+  &-label {
+    display: flex;
+    align-items: center;
+    padding-right: 1rem;
+  }
+
+  &-input {
+    @include font-paragraph(200);
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: 1px solid $color-primary-300;
+    color: $color-primary-300;
+    width: 100%;
+    max-width: 25rem;
+
+    @media (max-width: $screen-width-mobile) {
+      max-width: 100%;
+    }
+  }
+
+  &-input:focus {
+    outline: 1px solid $color-primary-300;
+  }
 }
 
 // UI Elements
