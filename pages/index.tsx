@@ -5,9 +5,10 @@
 
 import { getSession, signOut } from "next-auth/react";
 import { useState } from "react";
-import { Session } from "next-auth";
-import type { NextApiRequest } from "next";
+import { Session, unstable_getServerSession } from "next-auth";
+import type { NextApiRequest, NextApiResponse } from "next";
 import AddRequest from "../components/addrequest";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 // Get page elements
 import MainContainer from "../components/main-container";
@@ -57,12 +58,19 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
 /**
  * Serverside code
  */
-export const getServerSideProps = async (context: { req: NextApiRequest }) => {
-  const session: Session | null = await getSession({ req: context.req });
+export const getServerSideProps = async (context: {
+  req: NextApiRequest;
+  res: NextApiResponse;
+}) => {
+  const session: Session | null = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
   // Get currently logged in user's role and email
   // if unsuccessful, forward to login page
-  if (session && session.user?.email) {
+  if (session && session.user!.email) {
     return {
       props: {
         userRole: session.user.role,

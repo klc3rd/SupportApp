@@ -8,10 +8,11 @@ interface IInput {
   name: string;
   onChange?: () => void;
   ref?: React.Ref<HTMLInputElement>;
+  maxLength?: number;
 }
 
 const Input: React.FC<IInput> = React.forwardRef((props, ref) => {
-  const { name, onChange } = props;
+  const { name, onChange, maxLength } = props;
 
   return (
     <input
@@ -19,6 +20,7 @@ const Input: React.FC<IInput> = React.forwardRef((props, ref) => {
       className="form-input"
       type="text"
       ref={ref}
+      maxLength={maxLength ? maxLength : 20}
       onChange={onChange}
     />
   );

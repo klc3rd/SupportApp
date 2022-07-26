@@ -18,6 +18,13 @@
       grid-template-columns: 1fr;
       row-gap: 1rem;
     }
+
+    &-btnbox {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      grid-column: 1 / -1;
+    }
   }
 
   &-modal {

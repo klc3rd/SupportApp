@@ -2,6 +2,7 @@
  * This page processes login requests using next-auth
  */
 import NextAuth from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToDB } from "../../../lib/db/db";
 
@@ -11,8 +12,9 @@ import {
 } from "../../../lib/db/users/info";
 import bcrypt from "bcryptjs";
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
+
   callbacks: {
     async session({ session }) {
       if (session.user?.email) {
@@ -21,10 +23,14 @@ export default NextAuth({
           session.user = foundUser;
         }
       }
-
       return session;
     },
   },
+  providers: [],
+};
+
+export default NextAuth({
+  session: { strategy: "jwt" },
   providers: [
     CredentialsProvider({
       credentials: {

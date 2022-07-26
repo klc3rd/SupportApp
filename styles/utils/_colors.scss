@@ -18,6 +18,7 @@ $color-form: #d1d8e9;
 
 $color-black: #000717;
 $color-error: #c0392b;
+$color-error-hover: #e74c3c;
 
 .error {
   @include font-paragraph(200);
