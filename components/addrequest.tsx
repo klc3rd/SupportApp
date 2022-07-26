@@ -3,6 +3,7 @@
  */
 import TransitionContainer from "../components/motion/transition-container";
 import Input from "./ui/form/input";
+import TextArea from "./ui/form/textarea";
 
 interface IAddRequest {
   closeHandler: () => void;
@@ -27,6 +28,18 @@ const AddRequest: React.FC<IAddRequest> = (props) => {
           </label>
           <div>
             <Input name="summary" />
+          </div>
+          <label className="form-label" htmlFor="issue">
+            Issue
+          </label>
+          <div>
+            <TextArea name="issue" />
+          </div>
+          <label className="form-label" htmlFor="steps">
+            Replication Steps
+          </label>
+          <div>
+            <TextArea name="steps" />
           </div>
         </div>
       </div>
