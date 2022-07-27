@@ -28,7 +28,7 @@ const AddRequest: React.FC<IAddRequest> = (props) => {
   const issueRef = useRef<HTMLTextAreaElement | null>(null);
   const replicationStepsRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     if (deviceRef.current!.value.length === 0) {
       setDeviceError(true);
       return;
@@ -56,21 +56,23 @@ const AddRequest: React.FC<IAddRequest> = (props) => {
       replicationSteps: replicationSteps,
     };
 
+    closeHandler();
+
     /**
      * Submit to api to create a new ticket
      */
-    fetch("/api/tickets/new", {
+    const response = await fetch("/api/tickets/new", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify(newTicket),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        closeHandler();
-      });
+    });
+
+    if (response.status !== 200) {
+      const data = await response.json();
+      setGeneralError(data.message);
+    }
   };
 
   const cancelErrors = () => {

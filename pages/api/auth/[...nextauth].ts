@@ -26,11 +26,6 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  providers: [],
-};
-
-export default NextAuth({
-  session: { strategy: "jwt" },
   providers: [
     CredentialsProvider({
       credentials: {
@@ -63,4 +58,6 @@ export default NextAuth({
       },
     }),
   ],
-});
+};
+
+export default NextAuth(authOptions);

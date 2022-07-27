@@ -91,3 +91,34 @@
     }
   }
 }
+
+// Panel
+.main {
+  &-panel {
+    @include font-paragraph(200);
+    margin: 2rem 0;
+    padding: 1rem;
+    width: 100%;
+    background-color: $color-grey-100;
+    box-shadow: 2px 2px 5px rgba($color-grey-300, 0.5);
+
+    color: $color-primary-300;
+
+    &-link,
+    &-link:active {
+      color: $color-primary-300;
+      cursor: pointer;
+    }
+
+    &-link:hover {
+      color: $color-primary-200;
+    }
+  }
+
+  // For "loading/no tickets found" text
+  &-status {
+    @include font-paragraph(100);
+    color: $color-primary-300;
+    text-align: center;
+  }
+}

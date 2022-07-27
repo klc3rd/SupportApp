@@ -3,6 +3,7 @@ export enum Status {
   Unassigned = 1,
   AwaitingUserResponse = 2,
   AwaitingTechniciansResponse = 3,
+  All = 100,
 }
 
 export default Status;

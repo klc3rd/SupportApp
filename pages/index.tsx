@@ -3,15 +3,18 @@
  * if logged in, otherwise forwards you to the login page
  *******************************/
 
-import { signOut } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Session, unstable_getServerSession } from "next-auth";
 import type { NextApiRequest, NextApiResponse } from "next";
 import AddRequest from "../components/addrequest";
 import { authOptions } from "./api/auth/[...nextauth]";
 
+import Status from "../lib/enums/ticket-status";
+declare type ITicket = typeof import("ticket-types");
+
 // Get page elements
 import MainContainer from "../components/main-container";
+import MainPanel from "../components/mainpanel";
 
 interface iIndexPage {
   userRole: string;
@@ -20,9 +23,30 @@ interface iIndexPage {
 
 const IndexPage: React.FC<iIndexPage> = (props) => {
   const role = props.userRole;
+  const [filter, setFilter] = useState<number>(Status.All);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // This will be empty for now as a temporary stub
+  const [tickets, setTickets] = useState<ITicket[]>([]);
 
   // If true, addRequest shows an overlay and modal for adding a request
   const [addRequest, setAddRequest] = useState<boolean>(false);
+
+  /**
+   * Get tickets and update state
+   */
+  useEffect(() => {
+    fetch(`/api/tickets/get/${filter}`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setTickets(data);
+      });
+  }, []);
 
   // submitRequestHandler and closeAddRequest open and close the
   // new request modal and overlay
@@ -41,15 +65,11 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
     <MainContainer submitRequestHandler={submitRequestHandler} role={role}>
       <>
         {addRequest && <AddRequest closeHandler={closeAddRequest} />}
-        <h1>Test home page!</h1>
-        <h2>You are a {role}</h2>
-        <button
-          onClick={() => {
-            signOut();
-          }}
-        >
-          Sign Out
-        </button>
+        <MainPanel tickets={[]} />
+        <div className="main-status">
+          {isLoading && `Loading...`}
+          {!isLoading && tickets.length === 0 && `No tickets found`}
+        </div>
       </>
     </MainContainer>
   );
