@@ -6,15 +6,17 @@
 import { useState, useEffect } from "react";
 import { Session, unstable_getServerSession } from "next-auth";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { useRouter } from "next/router";
 import AddRequest from "../components/addrequest";
 import { authOptions } from "./api/auth/[...nextauth]";
 
 import Status from "../lib/enums/ticket-status";
-declare type ITicket = typeof import("ticket-types");
+import { ITicket } from "ticket-types";
 
 // Get page elements
 import MainContainer from "../components/main-container";
-import MainPanel from "../components/mainpanel";
+import MainPanel from "../components/ticket-list/mainpanel";
+import TicketList from "../components/ticket-list/list";
 
 interface iIndexPage {
   userRole: string;
@@ -22,6 +24,8 @@ interface iIndexPage {
 }
 
 const IndexPage: React.FC<iIndexPage> = (props) => {
+  const router = useRouter();
+
   const role = props.userRole;
   const [filter, setFilter] = useState<number>(Status.All);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -53,14 +57,16 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
         setTickets(data);
       });
     });
-  }, [filter]);
+  }, [filter, addRequest]);
 
   // submitRequestHandler and closeAddRequest open and close the
   // new request modal and overlay
   const submitRequestHandler = () => {
     setAddRequest(true);
   };
+
   const closeAddRequest = () => {
+    // router.reload();
     setAddRequest(false);
   };
 
@@ -78,6 +84,7 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
           {!isLoading && tickets.length === 0 && `No tickets found`}
           {!isLoading && error && <span className="error">${error}</span>}
         </div>
+        {tickets.length > 0 && <TicketList tickets={tickets} />}
       </>
     </MainContainer>
   );

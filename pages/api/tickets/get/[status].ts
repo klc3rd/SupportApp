@@ -9,7 +9,7 @@ import Err from "../../../../lib/Err";
 import Ticket from "../../../../lib/db/schemas/Ticket";
 import Status from "../../../../lib/enums/ticket-status";
 
-declare type ITicket = typeof import("ticket-types");
+import { ITicket } from "ticket-types";
 
 const GetTickets = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {

@@ -52,10 +52,14 @@ const newTicket = async (req: NextApiRequest, res: NextApiResponse) => {
         throw new Err(422, "Must include an issue");
       }
 
+      // Make date string
+      const date = new Date();
+
       // Create the ticket object
       const newTicket = new Ticket({
         poster_id: session.user.id,
         assigned_id: "",
+        date: date,
         number: ticketNumber,
         device: device,
         summary: summary,

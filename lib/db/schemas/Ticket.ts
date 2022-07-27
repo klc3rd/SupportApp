@@ -6,6 +6,7 @@ import { Status } from "../../enums/ticket-status";
 const TicketSchema = new mongoose.Schema<ITicket>({
   poster_id: { type: String, required: true },
   assigned_id: { type: String },
+  date: { type: String, required: true },
   number: { type: String, required: true, unique: true },
   device: { type: String, required: true },
   summary: { type: String, required: true },

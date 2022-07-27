@@ -56,8 +56,6 @@ const AddRequest: React.FC<IAddRequest> = (props) => {
       replicationSteps: replicationSteps,
     };
 
-    closeHandler();
-
     /**
      * Submit to api to create a new ticket
      */
@@ -72,6 +70,10 @@ const AddRequest: React.FC<IAddRequest> = (props) => {
     if (response.status !== 200) {
       const data = await response.json();
       setGeneralError(data.message);
+    }
+
+    if (response.status === 200) {
+      closeHandler();
     }
   };
 

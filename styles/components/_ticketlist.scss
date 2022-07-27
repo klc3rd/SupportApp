@@ -1,0 +1,85 @@
+@mixin col($num) {
+  @if $num == 1 {
+    grid-column: 1 / 2;
+  } @else if $num == 2 {
+    grid-column: 2 / 3;
+  } @else if $num == 3 {
+    grid-column: 3 / 4;
+  } @else if $num == 4 {
+    grid-column: 4 / 5;
+  }
+
+  border-style: solid;
+  border-color: $color-primary-300;
+}
+
+.ticket {
+  &-list {
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: 20fr 25fr 35fr 20fr;
+
+    @media (max-width: $screen-width-small) {
+      grid-template-columns: 30fr 70fr;
+    }
+
+    &-cell {
+      border: 0;
+      padding: 1.5rem 3rem;
+      @include font-paragraph(200);
+
+      &-grey {
+        background-color: $color-grey-150;
+      }
+
+      &_header {
+        background-color: $color-tertiary-100;
+      }
+
+      &-ticketnumber {
+        @include col(1);
+        text-align: center;
+      }
+
+      &-status {
+        @include col(2);
+        text-align: center;
+
+        @media (max-width: $screen-width-small) {
+          display: none;
+        }
+      }
+
+      &-issue {
+        @include col(3);
+        text-align: center;
+
+        @media (max-width: $screen-width-small) {
+          @include col(2);
+        }
+      }
+
+      &-date {
+        @include col(4);
+        text-align: center;
+
+        @media (max-width: $screen-width-small) {
+          display: none;
+        }
+      }
+    }
+  }
+
+  // Links to go to ticket detail
+  &-link,
+  &-link:active,
+  &-link:visited {
+    color: $color-primary-100;
+    cursor: pointer;
+  }
+
+  &-link:hover {
+    color: $color-primary-300;
+    text-decoration: underline;
+  }
+}
