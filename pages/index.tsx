@@ -44,6 +44,7 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
       },
     }).then((response) => {
       response.json().then((data) => {
+        setIsLoading(false);
         if (response.status !== 200) {
           setError(data.message);
           return;
