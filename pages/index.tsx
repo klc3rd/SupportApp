@@ -3,7 +3,7 @@
  * if logged in, otherwise forwards you to the login page
  *******************************/
 
-import { getSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { Session, unstable_getServerSession } from "next-auth";
 import type { NextApiRequest, NextApiResponse } from "next";

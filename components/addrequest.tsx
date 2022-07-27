@@ -48,6 +48,29 @@ const AddRequest: React.FC<IAddRequest> = (props) => {
     const summary = summaryRef.current!.value;
     const issue = issueRef.current!.value;
     const replicationSteps = replicationStepsRef.current!.value;
+
+    const newTicket = {
+      device: device,
+      summary: summary,
+      issue: issue,
+      replicationSteps: replicationSteps,
+    };
+
+    /**
+     * Submit to api to create a new ticket
+     */
+    fetch("/api/tickets/new", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newTicket),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        closeHandler();
+      });
   };
 
   const cancelErrors = () => {

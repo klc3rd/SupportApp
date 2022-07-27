@@ -1,9 +1,14 @@
 // Contains type definitions meant for managing tickets
-declare module "ticket" {
+declare module "ticket-types" {
   // An open ticket is anything that is not in closed status
-  enum Status {
-    Closed = 0,
-    AwaitingUserResponse = 1,
-    AwaitingTechniciansResponse = 2,
+  interface ITicket {
+    poster_id: string;
+    assigned_id?: string;
+    number: string;
+    device: string;
+    summary: string;
+    issue: string;
+    steps?: string;
+    status?: number;
   }
 }
