@@ -46,7 +46,7 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
       .then((data) => {
         setTickets(data);
       });
-  }, []);
+  }, [filter]);
 
   // submitRequestHandler and closeAddRequest open and close the
   // new request modal and overlay
