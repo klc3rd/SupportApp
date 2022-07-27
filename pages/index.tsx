@@ -66,7 +66,6 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
   };
 
   const closeAddRequest = () => {
-    // router.reload();
     setAddRequest(false);
   };
 
