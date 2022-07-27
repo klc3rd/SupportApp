@@ -25,6 +25,7 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
   const role = props.userRole;
   const [filter, setFilter] = useState<number>(Status.All);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   // This will be empty for now as a temporary stub
   const [tickets, setTickets] = useState<ITicket[]>([]);
@@ -41,11 +42,16 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
       headers: {
         "Content-type": "application/json",
       },
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    }).then((response) => {
+      response.json().then((data) => {
+        if (response.status !== 200) {
+          setError(data.message);
+          return;
+        }
+
         setTickets(data);
       });
+    });
   }, [filter]);
 
   // submitRequestHandler and closeAddRequest open and close the
@@ -69,6 +75,7 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
         <div className="main-status">
           {isLoading && `Loading...`}
           {!isLoading && tickets.length === 0 && `No tickets found`}
+          {!isLoading && error && <span className="error">${error}</span>}
         </div>
       </>
     </MainContainer>
