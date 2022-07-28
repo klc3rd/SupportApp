@@ -1,5 +1,7 @@
 // The form elements in this section are for a standard form, login and signup
 // form elements are in _auth-form.scss
+$form-shadow: 2px 2px 10px rgba($color-black, 0.25);
+
 .form {
   &-icon {
     width: 2.4rem;
@@ -22,7 +24,8 @@
     @include font-paragraph(200);
     padding: 0.5rem;
     border-radius: 10px;
-    border: 1px solid $color-primary-300;
+    border: 0;
+    box-shadow: $form-shadow;
     color: $color-primary-300;
     width: 100%;
     max-width: 35rem;
@@ -41,7 +44,8 @@
     @include font-paragraph(200);
     padding: 0.5rem;
     border-radius: 10px;
-    border: 1px solid $color-primary-300;
+    border: 0;
+    box-shadow: $form-shadow;
     color: $color-primary-300;
     width: 100%;
     height: 20rem;
@@ -58,9 +62,11 @@
     align-items: center;
     padding: 0.5rem 1rem;
     margin: 0 1rem;
+    width: 20rem;
     border-radius: 10px;
     background-color: $color-grey-100;
-    border: 2px solid $color-primary-300;
+    border: 0;
+    box-shadow: $form-shadow;
     color: $color-primary-300;
     cursor: pointer;
 
@@ -95,12 +101,27 @@
 .main {
   // Panel
   &-panel {
-    @include font-paragraph(200);
-    margin: 2rem auto;
-    padding: 1rem;
     width: 100%;
-    background-color: $color-grey-100;
-    box-shadow: 2px 2px 5px rgba($color-grey-300, 0.5);
+    display: flex;
+    margin: 2rem auto;
+
+    @media (max-width: $screen-width-small) {
+      flex-direction: column;
+    }
+
+    &-container {
+      @include font-paragraph(200);
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      width: 100%;
+      background-color: $color-grey-100;
+
+      @media (max-width: $screen-width-small) {
+        margin-top: 2rem;
+        flex-direction: column;
+      }
+    }
 
     color: $color-primary-300;
 

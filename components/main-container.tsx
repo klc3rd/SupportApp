@@ -7,16 +7,15 @@ import Menu from "./menu";
 interface IMainContainer {
   role: string;
   children: JSX.Element | JSX.Element[];
-  submitRequestHandler: () => void;
 }
 
 const MainContainer: React.FC<IMainContainer> = (props) => {
-  const { role, children, submitRequestHandler } = props;
+  const { role, children } = props;
 
   return (
     <TransitionContainer>
       <div className="main-container">
-        <Menu submitRequestHandler={submitRequestHandler} role={role} />
+        <Menu role={role} />
         <div className="main-container__body">{children}</div>
       </div>
     </TransitionContainer>

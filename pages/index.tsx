@@ -17,12 +17,12 @@ import MainContainer from "../components/main-container";
 import MainPanel from "../components/ticket-list/mainpanel";
 import TicketList from "../components/ticket-list/list";
 
-interface iIndexPage {
+interface IIndexPage {
   userRole: string;
   userEmail: string;
 }
 
-const IndexPage: React.FC<iIndexPage> = (props) => {
+const IndexPage: React.FC<IIndexPage> = (props) => {
   const role = props.userRole;
   const [filter, setFilter] = useState<number>(Status.All);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -71,10 +71,10 @@ const IndexPage: React.FC<iIndexPage> = (props) => {
    */
 
   return (
-    <MainContainer submitRequestHandler={submitRequestHandler} role={role}>
+    <MainContainer role={role}>
       <>
         {addRequest && <AddRequest closeHandler={closeAddRequest} />}
-        <MainPanel tickets={[]} />
+        <MainPanel submitRequestHandler={submitRequestHandler} tickets={[]} />
         <div className="main-status">
           {isLoading && `Loading...`}
           {!isLoading && tickets.length === 0 && `No tickets found`}

@@ -4,21 +4,19 @@ import Link from "next/link";
 
 interface IMenu {
   role: string;
-  submitRequestHandler: () => void;
 }
 
 const Menu: React.FC<IMenu> = (props) => {
-  const { role, submitRequestHandler } = props;
+  const { role } = props;
 
   return (
     <div className="main-container__menubox">
       <div className="main-container__menubox-menu">
+        <div></div>
         <div>
-          <Button icon="add" onClick={submitRequestHandler}>
-            Submit Request
-          </Button>
-        </div>
-        <div>
+          <Link href="/">
+            <span className="main-container__menubox-menu-link">Home</span>
+          </Link>
           {role == "admin" && (
             <Link href="/admin">
               <span className="main-container__menubox-menu-link">Admin</span>
