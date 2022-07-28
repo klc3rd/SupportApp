@@ -23,5 +23,12 @@ $color-error-hover: #e74c3c;
 
 .error {
   @include font-paragraph(200);
+  text-align: center;
   color: $color-error;
+}
+
+.message {
+  @include font-paragraph(200);
+  text-align: center;
+  color: $color-primary-200;
 }

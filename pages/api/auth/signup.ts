@@ -40,7 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
       // Check that password is >= 8 characters
-      if (password.length < 8) {
+      if (password.length < 8 || password.length >= 255) {
         throw new Err(422, "Password must be at least 8 characters");
       }
 

@@ -8,18 +8,19 @@ interface IInput {
   name: string;
   onChange?: () => void;
   ref?: React.Ref<HTMLInputElement>;
+  type?: string;
   maxLength?: number;
   placeholder?: string;
 }
 
 const Input: React.FC<IInput> = React.forwardRef((props, ref) => {
-  const { name, onChange, maxLength, placeholder } = props;
+  const { name, onChange, type, maxLength, placeholder } = props;
 
   return (
     <input
       name={name}
       className="form-input"
-      type="text"
+      type={type ? type : "text"}
       ref={ref}
       maxLength={maxLength ? maxLength : 20}
       onChange={onChange}
