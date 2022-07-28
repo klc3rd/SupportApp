@@ -7,6 +7,7 @@ import { connectToDB } from "../db";
 import User from "../schemas/Users";
 import { IUser, ISecuredUser } from "user-types";
 
+// Get user info with email address
 export const getUserByEmail = async (email: string) => {
   // connect to DB
   await connectToDB();
@@ -45,4 +46,37 @@ export const getSecureByEmail = async (email: string) => {
   }
 
   return returnUser;
+};
+
+// Get secured user info by username
+export const getSecureByUsername = async (username: string) => {
+  // connect to DB
+  await connectToDB();
+
+  const foundUser: ISecuredUser | null = await User.findOne({
+    username: username,
+  });
+
+  let returnUser: ISecuredUser | null = null;
+
+  if (foundUser != null) {
+    returnUser = {
+      id: foundUser.id,
+      username: foundUser.username,
+      email: foundUser.email,
+      role: foundUser.role,
+    };
+  }
+
+  return returnUser;
+};
+
+// Get the user info based on the user id
+export const getUserByID = async (id: string) => {
+  // connect to DB
+  await connectToDB();
+
+  const foundUser: IUser | null = await User.findOne({ _id: id });
+
+  return foundUser;
 };

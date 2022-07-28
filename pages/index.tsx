@@ -38,12 +38,7 @@ const IndexPage: React.FC<IIndexPage> = (props) => {
    * Get tickets and update state
    */
   useEffect(() => {
-    fetch(`/api/tickets/get/${filter}`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-    }).then((response) => {
+    fetch(`/api/tickets/get/${filter}`).then((response) => {
       response.json().then((data) => {
         setIsLoading(false);
         if (response.status !== 200) {
@@ -99,13 +94,12 @@ export const getServerSideProps = async (context: {
     authOptions
   );
 
-  // Get currently logged in user's role and email
-  // if unsuccessful, forward to login page
-  if (session && session.user!.email) {
+  // Get currently logged in user's role if
+  // unsuccessful, forward to login page
+  if (session) {
     return {
       props: {
         userRole: session.user.role,
-        userEmail: session.user.email,
       },
     };
   } else {
