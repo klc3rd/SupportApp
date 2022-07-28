@@ -8,7 +8,6 @@ import { connectToDB } from "../../../lib/db/db";
 
 import {
   getUserByUsername,
-  getSecureByEmail,
   getSecureByUsername,
 } from "../../../lib/db/users/info";
 import bcrypt from "bcryptjs";
@@ -18,20 +17,6 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async session({ session }) {
-      /**
-       * If I retrieve with email, next-auth has problems if I change the email
-       * address while the user is logged in, requiring a login anytime the email
-       * address is changed, I changed it to use the username in the name field
-       */
-
-      // if (session.user?.email) {
-      //   const foundUser = await getSecureByEmail(session.user.email);
-      //   if (foundUser) {
-      //     session.user = foundUser;
-      //   }
-      // }
-      // if (session.user.email) {
-
       if (session.user.name) {
         const foundUser = await getSecureByUsername(session.user.name);
         if (foundUser) {
