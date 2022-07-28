@@ -15,8 +15,8 @@
     row-gap: 2rem;
 
     @media (max-width: $screen-width-mobile) {
-      grid-template-columns: 1fr;
-      row-gap: 1rem;
+      display: flex;
+      flex-direction: column;
     }
 
     &-btnbox {
