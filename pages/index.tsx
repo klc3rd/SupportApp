@@ -6,7 +6,6 @@
 import { useState, useEffect } from "react";
 import { Session, unstable_getServerSession } from "next-auth";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { useRouter } from "next/router";
 import AddRequest from "../components/addrequest";
 import { authOptions } from "./api/auth/[...nextauth]";
 
@@ -24,8 +23,6 @@ interface iIndexPage {
 }
 
 const IndexPage: React.FC<iIndexPage> = (props) => {
-  const router = useRouter();
-
   const role = props.userRole;
   const [filter, setFilter] = useState<number>(Status.All);
   const [isLoading, setIsLoading] = useState<boolean>(false);
