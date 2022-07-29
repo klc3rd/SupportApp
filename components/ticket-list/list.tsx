@@ -21,7 +21,7 @@ const TicketList: React.FC<ITicketList> = (props) => {
     <>
       <div className="ticket-list">
         <div className="ticket-list-cell ticket-list-cell_header ticket-list-cell-ticketnumber">
-          Ticket Number
+          Number
         </div>
         <div className="ticket-list-cell ticket-list-cell_header ticket-list-cell-status">
           Status
