@@ -1,0 +1,20 @@
+.admin {
+  &-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 95%;
+    max-width: 60rem;
+    margin: 1rem auto;
+
+    &-header {
+      @include font-paragraph(200);
+      background-color: $color-tertiary-100;
+      color: $color-primary-100;
+      padding: 1rem 2rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

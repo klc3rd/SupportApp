@@ -116,18 +116,13 @@ const SignupPage: React.FC = () => {
     setGeneralError(null);
   };
 
-  // Disable the form submission as I need to process via the login button
-  const formDisable = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
-
   // Return signup page
   return (
     <TransitionContainer>
       <div className="signup">
         <div className="auth__panel">
           <div className="auth__box">
-            <form onSubmit={formDisable}>
+            <form onSubmit={(event) => event.preventDefault()}>
               <AuthInput
                 placeholder="Username"
                 type="text"

@@ -80,3 +80,13 @@ export const getUserByID = async (id: string) => {
 
   return foundUser;
 };
+
+// Get list of all users
+export const getUsers = async () => {
+  // connect to DB
+  await connectToDB();
+
+  const foundUser: ISecuredUser[] | null = await User.find();
+
+  return foundUser;
+};
