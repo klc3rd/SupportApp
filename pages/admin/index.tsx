@@ -36,9 +36,9 @@ const AdminIndex: React.FC<IAdminIndex> = (props) => {
   }, []);
 
   // Delete user
-  const deleteUserHandler = async () => {
+  const deleteUserHandler = async (userid: string) => {
     // Add this later
-    console.log("Running delete user");
+    console.log(`Running delete user on user ${userid}`);
   };
 
   /**

@@ -9,7 +9,7 @@ import UserItem from "./useritem";
 interface IAdminPanel {
   users: ISecuredUser[] | null;
   currentUser: string;
-  onDelete?: () => void;
+  onDelete: (userid: string) => Promise<void>;
   onError?: Dispatch<SetStateAction<string | null>>;
 }
 
