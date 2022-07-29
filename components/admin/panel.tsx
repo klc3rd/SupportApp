@@ -10,11 +10,10 @@ interface IAdminPanel {
   users: ISecuredUser[] | null;
   currentUser: string;
   onDelete: (userid: string) => Promise<void>;
-  onError?: Dispatch<SetStateAction<string | null>>;
 }
 
 const AdminPanel: React.FC<IAdminPanel> = (props) => {
-  const { users, currentUser, onDelete, onError } = props;
+  const { users, currentUser, onDelete } = props;
 
   return (
     <div className="admin-panel">
@@ -28,7 +27,6 @@ const AdminPanel: React.FC<IAdminPanel> = (props) => {
             user={user}
             currentUser={currentUser}
             onDelete={onDelete}
-            onError={onError}
           />
         );
       })}

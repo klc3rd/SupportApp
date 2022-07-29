@@ -1,4 +1,4 @@
-import { SetStateAction, Dispatch, useState } from "react";
+import { SetStateAction, Dispatch, useState, useRef } from "react";
 import { ISecuredUser } from "user-types";
 import SmallButton from "../ui/small-button";
 
@@ -6,13 +6,14 @@ interface IUserItem {
   user: ISecuredUser;
   currentUser: string;
   onDelete: (userid: string) => Promise<void>;
-  onError?: Dispatch<SetStateAction<string | null>>;
 }
 
 const UserItem: React.FC<IUserItem> = (props) => {
-  const { user, currentUser, onDelete, onError } = props;
+  const { user, currentUser, onDelete } = props;
 
   const [deleteStatus, setDeleteStatus] = useState<boolean>(false);
+
+  const roleRef = useRef<HTMLSelectElement | null>(null);
 
   let currentLoggedInUser: boolean = false;
 
@@ -20,16 +21,72 @@ const UserItem: React.FC<IUserItem> = (props) => {
     currentLoggedInUser = true;
   }
 
-  // Change delete status
-  const deleteHandler = () => {
-    setDeleteStatus(true);
+  // Change user role
+  const roleChangeHandler = async () => {
+    const newRole = roleRef.current!.value;
+
+    const response = await fetch("/api/admin/changerole", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: user._id,
+        role: newRole,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.status !== 200) {
+      console.log(data.message);
+    }
   };
+
+  // Modify menu based on user role
+  let roleMenu;
+  if (user.role === "admin") {
+    roleMenu = (
+      <>
+        <option value="admin">Admin</option>
+        <option value="tech">Tech</option>
+        <option value="user">User</option>
+      </>
+    );
+  } else if (user.role == "tech") {
+    roleMenu = (
+      <>
+        <option value="tech">Tech</option>
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+      </>
+    );
+  } else {
+    roleMenu = (
+      <>
+        <option value="user">User</option>
+        <option value="tech">Tech</option>
+        <option value="admin">Admin</option>
+      </>
+    );
+  }
 
   // Return user item line
   return (
     <>
       <div className="admin-panel-cell">{user.username}</div>
-      <div className="admin-panel-cell">{user.role}</div>
+      <div className="admin-panel-cell">
+        {" "}
+        <select
+          className="ui-small-btn"
+          name="role"
+          disabled={currentLoggedInUser}
+          onChange={roleChangeHandler}
+          ref={roleRef}
+        >
+          {roleMenu}
+        </select>
+      </div>
       <div className="admin-panel-cell">
         {!deleteStatus && (
           <SmallButton

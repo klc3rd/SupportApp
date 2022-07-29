@@ -18,6 +18,9 @@ const AdminIndex: React.FC<IAdminIndex> = (props) => {
   // Store users array
   const [users, setUsers] = useState<ISecuredUser[] | null>(null);
 
+  // User deletion status
+  const [userDeletion, setUserDeletion] = useState<boolean>(false);
+
   // Get users
   useEffect(() => {
     const getUsers = async () => {
@@ -33,12 +36,28 @@ const AdminIndex: React.FC<IAdminIndex> = (props) => {
     };
 
     getUsers();
-  }, []);
+  }, [userDeletion]);
 
   // Delete user
   const deleteUserHandler = async (userid: string) => {
     // Add this later
     console.log(`Running delete user on user ${userid}`);
+
+    const response = await fetch("/api/admin/deleteuser", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userid: userid }),
+    });
+
+    const data = await response.json();
+
+    if (response.status !== 200) {
+      setError(data.message);
+    }
+
+    setUserDeletion((status) => !status);
   };
 
   /**
@@ -56,7 +75,6 @@ const AdminIndex: React.FC<IAdminIndex> = (props) => {
           <AdminPanel
             users={users}
             onDelete={deleteUserHandler}
-            onError={setError}
             currentUser={username}
           />
         )}
