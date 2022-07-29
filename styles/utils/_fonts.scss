@@ -9,6 +9,8 @@
     font-size: 3.6rem;
   } @else if $size == 400 {
     font-size: 2.4rem;
+  } @else if $size == 500 {
+    font-size: 2rem;
   } @else {
     font-size: $size;
   }

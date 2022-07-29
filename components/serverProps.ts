@@ -51,6 +51,7 @@ export const adminProps = async (context: {
   if (session?.user.role === "admin") {
     return {
       props: {
+        username: session.user.username,
         userRole: session.user.role,
       },
     };

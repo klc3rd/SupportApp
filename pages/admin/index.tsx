@@ -1,15 +1,17 @@
 import MainContainer from "../../components/main-container";
 import { useEffect, useState } from "react";
 import { ISecuredUser } from "user-types";
-
 import { adminProps as getServerSideProps } from "../../components/serverProps";
 
+import AdminPanel from "../../components/admin/panel";
+
 interface IAdminIndex {
+  username: string;
   userRole: string;
 }
 
 const AdminIndex: React.FC<IAdminIndex> = (props) => {
-  const { userRole } = props;
+  const { username, userRole } = props;
 
   const [error, setError] = useState<string | null>(null);
 
@@ -33,6 +35,12 @@ const AdminIndex: React.FC<IAdminIndex> = (props) => {
     getUsers();
   }, []);
 
+  // Delete user
+  const deleteUserHandler = async () => {
+    // Add this later
+    console.log("Running delete user");
+  };
+
   /**
    * Return main profile page
    */
@@ -45,11 +53,12 @@ const AdminIndex: React.FC<IAdminIndex> = (props) => {
           </div>
         )}
         {!error && (
-          <div className="admin-panel">
-            <div className="admin-panel-header">Username</div>
-            <div className="admin-panel-header">Role</div>
-            <div className="admin-panel-header">Delete</div>
-          </div>
+          <AdminPanel
+            users={users}
+            onDelete={deleteUserHandler}
+            onError={setError}
+            currentUser={username}
+          />
         )}
       </>
     </MainContainer>

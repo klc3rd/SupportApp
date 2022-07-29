@@ -24,7 +24,11 @@
     max-width: 60rem;
     border-radius: 25px;
     padding: 2rem 5rem;
-    background-color: rgba($color-form, 0.9);
+    box-shadow: 1px 1px 10px rgba($color-form, 0.5);
+
+    @media (max-width: $screen-width-small) {
+      background-color: rgba($color-form, 0.95);
+    }
   }
 
   &__container {
@@ -92,6 +96,10 @@
     @include font-paragraph(100);
     color: $color-primary-100;
     text-decoration: none;
+
+    @media (max-width: $screen-width-small) {
+      @include font-paragraph(200);
+    }
   }
 
   &-link:hover {
