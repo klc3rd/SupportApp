@@ -1,11 +1,10 @@
 import MainContainer from "../components/main-container";
-import { NextApiRequest, NextApiResponse } from "next";
 import { useState, useEffect, useRef } from "react";
-import { Session, unstable_getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]";
 import ShowIcon from "../components/ui/icons";
 import Input from "../components/ui/form/input";
 import SmallButton from "../components/ui/small-button";
+
+import { serverProps as getServerSideProps } from "../components/serverProps";
 
 interface IProfile {
   userRole: string;
@@ -242,36 +241,7 @@ const Profile: React.FC<IProfile> = (props) => {
   );
 };
 
-/**
- * Serverside code
- */
-export const getServerSideProps = async (context: {
-  req: NextApiRequest;
-  res: NextApiResponse;
-}) => {
-  const session: Session | null = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
-
-  // Get currently logged in user's role and email
-  // if unsuccessful, forward to login page
-  if (session) {
-    return {
-      props: {
-        userRole: session.user.role,
-      },
-    };
-  } else {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-};
+export { getServerSideProps };
 
 Profile.displayName = "Profile";
 export default Profile;

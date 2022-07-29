@@ -4,10 +4,7 @@
  *******************************/
 
 import { useState, useEffect } from "react";
-import { Session, unstable_getServerSession } from "next-auth";
-import type { NextApiRequest, NextApiResponse } from "next";
 import AddRequest from "../components/addrequest";
-import { authOptions } from "./api/auth/[...nextauth]";
 
 import Status from "../lib/enums/ticket-status";
 import { ITicket } from "ticket-types";
@@ -16,6 +13,8 @@ import { ITicket } from "ticket-types";
 import MainContainer from "../components/main-container";
 import MainPanel from "../components/ticket-list/mainpanel";
 import TicketList from "../components/ticket-list/list";
+
+import { serverProps as getServerSideProps } from "../components/serverProps";
 
 interface IIndexPage {
   userRole: string;
@@ -81,36 +80,7 @@ const IndexPage: React.FC<IIndexPage> = (props) => {
   );
 };
 
-/**
- * Serverside code
- */
-export const getServerSideProps = async (context: {
-  req: NextApiRequest;
-  res: NextApiResponse;
-}) => {
-  const session: Session | null = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
-
-  // Get currently logged in user's role if
-  // unsuccessful, forward to login page
-  if (session) {
-    return {
-      props: {
-        userRole: session.user.role,
-      },
-    };
-  } else {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-};
+export { getServerSideProps };
 
 IndexPage.displayName = "IndexPage";
 export default IndexPage;

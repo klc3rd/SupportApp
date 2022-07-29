@@ -1,9 +1,8 @@
 import MainContainer from "../../components/main-container";
 import { useEffect, useState } from "react";
-import { NextApiRequest, NextApiResponse } from "next";
-import { Session, unstable_getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]";
 import { ISecuredUser } from "user-types";
+
+import { adminProps as getServerSideProps } from "../../components/serverProps";
 
 interface IAdminIndex {
   userRole: string;
@@ -57,36 +56,7 @@ const AdminIndex: React.FC<IAdminIndex> = (props) => {
   );
 };
 
-/**
- * Serverside code
- */
-export const getServerSideProps = async (context: {
-  req: NextApiRequest;
-  res: NextApiResponse;
-}) => {
-  const session: Session | null = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
-
-  // Get currently logged in user's role and email
-  // if unsuccessful, forward to login page
-  if (session?.user.role === "admin") {
-    return {
-      props: {
-        userRole: session.user.role,
-      },
-    };
-  } else {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-};
+export { getServerSideProps };
 
 AdminIndex.displayName = "AdminIndex";
 export default AdminIndex;
