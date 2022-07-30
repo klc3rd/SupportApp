@@ -1,0 +1,35 @@
+.ticket {
+  margin: 1rem auto;
+  width: 100%;
+  max-width: 100rem;
+
+  &-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 15rem 1fr 10rem;
+    padding: 1rem;
+    gap: 1rem;
+    color: $color-primary-300;
+
+    &-header {
+      grid-column: 1 / 2;
+      padding: 0.5rem;
+    }
+
+    &-shortfield {
+      grid-column: 2 / 3;
+      padding: 0.5rem;
+      color: $color-secondary-300;
+    }
+
+    &-btnfield {
+      grid-column: 3 / 4;
+    }
+
+    &-field {
+      grid-column: 2 / 4;
+      padding: 0.5rem;
+      color: $color-secondary-300;
+    }
+  }
+}

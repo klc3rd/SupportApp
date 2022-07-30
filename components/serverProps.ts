@@ -20,6 +20,8 @@ export const serverProps = async (context: {
   if (session) {
     return {
       props: {
+        userid: session.user.id,
+        username: session.user.username,
         userRole: session.user.role,
       },
     };

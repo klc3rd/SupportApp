@@ -24,11 +24,9 @@
     max-width: 60rem;
     border-radius: 25px;
     padding: 2rem 5rem;
-    box-shadow: 1px 1px 10px rgba($color-form, 0.5);
+    background-color: rgba($color-form, 0.85);
 
-    @media (max-width: $screen-width-small) {
-      background-color: rgba($color-form, 0.95);
-    }
+    box-shadow: 1px 1px 10px rgba($color-form, 0.5);
   }
 
   &__container {

@@ -70,17 +70,18 @@ $form-shadow: 1px 1px 10px rgba($color-black, 0.05);
     border-radius: 10px;
     background-color: $color-grey-100;
     border: 0;
-    // box-shadow: $form-shadow;
+    box-shadow: $form-shadow;
     color: $color-primary-300;
     cursor: pointer;
 
-    &:active {
-      background-color: $color-grey-100;
+    &:hover {
+      transform: translateY(-0.1rem);
+      box-shadow: $form-shadow;
+      background-color: $color-grey-200;
     }
 
-    &:hover {
-      transform: translateY(-0.2rem);
-      box-shadow: $form-shadow;
+    &:active {
+      background-color: $color-grey-100;
     }
 
     &-red {
