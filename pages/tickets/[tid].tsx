@@ -94,7 +94,7 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
 
     getTicket();
     getPostData();
-  }, [status, ticketData, ticket_id]);
+  }, [status, ticketData, ticket_id, userRole, userid, username]);
 
   /**
    * Return main profile page
