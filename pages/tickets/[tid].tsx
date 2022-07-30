@@ -36,50 +36,50 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
   const ticket_id = router.query.tid;
 
   /**
-   * Get info for ticket
-   */
-  const getPostData = () => {
-    const assignableCheck = async () => {
-      if (
-        (userRole == "admin" || userRole == "tech") &&
-        ticketData &&
-        ticketData.user.username !== username
-      ) {
-        if (ticketData.ticket.assigned_id !== userid) {
-          setAssignableStatus("assignable");
-        } else {
-          setAssignableStatus("assigned");
-        }
-      }
-    };
-
-    if (ticketData?.ticket) {
-      // Format date
-      setDate(new Date(ticketData!.ticket!.date).toLocaleString());
-
-      // Set status
-      switch (ticketData!.ticket.status) {
-        case Status.Closed:
-          setStatus("Closed");
-          break;
-        case Status.Unassigned:
-          setStatus("Unassigned");
-          break;
-        case Status.AwaitingTechniciansResponse:
-          setStatus("Awaiting Technician Response");
-          break;
-        case Status.AwaitingUserResponse:
-          setStatus("Awaiting User Response");
-          break;
-      }
-    }
-    assignableCheck();
-  };
-
-  /**
    *  Retrieve ticket
    */
   useEffect(() => {
+    /**
+     * Get info for ticket
+     */
+    const getPostData = () => {
+      const assignableCheck = async () => {
+        if (
+          (userRole == "admin" || userRole == "tech") &&
+          ticketData &&
+          ticketData.user.username !== username
+        ) {
+          if (ticketData.ticket.assigned_id !== userid) {
+            setAssignableStatus("assignable");
+          } else {
+            setAssignableStatus("assigned");
+          }
+        }
+      };
+
+      if (ticketData?.ticket) {
+        // Format date
+        setDate(new Date(ticketData!.ticket!.date).toLocaleString());
+
+        // Set status
+        switch (ticketData!.ticket.status) {
+          case Status.Closed:
+            setStatus("Closed");
+            break;
+          case Status.Unassigned:
+            setStatus("Unassigned");
+            break;
+          case Status.AwaitingTechniciansResponse:
+            setStatus("Awaiting Technician Response");
+            break;
+          case Status.AwaitingUserResponse:
+            setStatus("Awaiting User Response");
+            break;
+        }
+      }
+      assignableCheck();
+    };
+
     const getTicket = async () => {
       const response = await fetch(`/api/tickets/${ticket_id}`);
       const data = await response.json();
@@ -94,7 +94,7 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
 
     getTicket();
     getPostData();
-  }, [status, ticketData, getPostData, ticket_id]);
+  }, [status, ticketData, ticket_id]);
 
   /**
    * Return main profile page
