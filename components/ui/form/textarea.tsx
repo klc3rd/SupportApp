@@ -14,7 +14,7 @@ interface ITextarea {
 }
 
 const TextArea: React.FC<ITextarea> = React.forwardRef((props, ref) => {
-  const { name, onChange, disabled, placeholder, value, children } = props;
+  const { name, onChange, disabled, placeholder, children } = props;
   return (
     <textarea
       name={name}
