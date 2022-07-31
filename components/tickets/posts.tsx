@@ -16,7 +16,7 @@ interface IPostsPage {
 }
 
 const Posts: React.FC<IPostsPage> = (props) => {
-  const { userid, username, userRole, ticket } = props;
+  const { userid, ticket } = props;
 
   const [posts, setPosts] = useState<IPost | null>(null);
   const [error, setError] = useState<string | null>(null);
