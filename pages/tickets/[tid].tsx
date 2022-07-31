@@ -41,6 +41,11 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
   const router = useRouter();
   const ticket_id = router.query.tid;
 
+  const yourTicketStatus =
+    !assignableStatus &&
+    ticketData?.ticket.poster_id === userid &&
+    userRole !== "user";
+
   /**
    *  Retrieve ticket
    */
@@ -169,6 +174,11 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
                 </Button>
               </div>
             )}
+            {!assignableStatus &&
+              ticketData?.ticket.poster_id === userid &&
+              userRole !== "user" && (
+                <span className="ticket-yourticket">This is your ticket</span>
+              )}
             <div className="ticket-grid-header">Assigned Tech</div>
             <div className="ticket-grid-shortfield">
               {ticketData?.assignedTech
