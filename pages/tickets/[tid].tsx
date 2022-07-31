@@ -10,6 +10,7 @@ import Status from "../../lib/enums/ticket-status";
 import { serverProps as getServerSideProps } from "../../components/serverProps";
 import { ITicket } from "ticket-types";
 import { ISecuredUser } from "user-types";
+import Posts from "../../components/tickets/posts";
 import Button from "../../components/ui/button";
 
 interface ITicketPage {
@@ -21,6 +22,7 @@ interface ITicketPage {
 interface ITicketData {
   user: ISecuredUser;
   ticket: ITicket;
+  assignedTech: ISecuredUser | null;
 }
 
 const TicketPage: React.FC<ITicketPage> = (props) => {
@@ -30,6 +32,13 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
   const [status, setStatus] = useState<string | null>(null);
   const [date, setDate] = useState<string | null>(null);
   const [assignableStatus, setAssignableStatus] = useState<string | null>(null);
+  const [assignedTech, setAssignedTech] = useState<
+    ISecuredUser | null | undefined
+  >(null);
+
+  // There are circular dependencies in the useEffects, this is to remove that
+  // giving a way for them to refresh without causing issues
+  const [ticketChangeCount, setTicketChangeCount] = useState<number>(0);
 
   // Get ticket id from URL Param
   const router = useRouter();
@@ -39,47 +48,6 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
    *  Retrieve ticket
    */
   useEffect(() => {
-    /**
-     * Get info for ticket
-     */
-    const getPostData = () => {
-      const assignableCheck = async () => {
-        if (
-          (userRole == "admin" || userRole == "tech") &&
-          ticketData &&
-          ticketData.user.username !== username
-        ) {
-          if (ticketData.ticket.assigned_id !== userid) {
-            setAssignableStatus("assignable");
-          } else {
-            setAssignableStatus("assigned");
-          }
-        }
-      };
-
-      if (ticketData?.ticket) {
-        // Format date
-        setDate(new Date(ticketData!.ticket!.date).toLocaleString());
-
-        // Set status
-        switch (ticketData!.ticket.status) {
-          case Status.Closed:
-            setStatus("Closed");
-            break;
-          case Status.Unassigned:
-            setStatus("Unassigned");
-            break;
-          case Status.AwaitingTechniciansResponse:
-            setStatus("Awaiting Technician Response");
-            break;
-          case Status.AwaitingUserResponse:
-            setStatus("Awaiting User Response");
-            break;
-        }
-      }
-      assignableCheck();
-    };
-
     const getTicket = async () => {
       const response = await fetch(`/api/tickets/${ticket_id}`);
       const data = await response.json();
@@ -93,8 +61,103 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
     };
 
     getTicket();
-    getPostData();
-  }, [status, ticketData, ticket_id, userRole, userid, username]);
+    // getPostData();
+  }, [
+    status,
+    assignedTech,
+    ticket_id,
+    userRole,
+    userid,
+    username,
+    ticketChangeCount,
+  ]);
+
+  /**
+   * Get post data
+   */
+  useEffect(() => {
+    /**
+     * Get info for ticket
+     */
+    const assignableCheck = async () => {
+      if (
+        (userRole == "admin" || userRole == "tech") &&
+        ticketData &&
+        ticketData.user.username !== username
+      ) {
+        if (ticketData.ticket.assigned_id !== userid) {
+          setAssignableStatus("assignable");
+        } else {
+          setAssignableStatus("assigned");
+        }
+      }
+    };
+
+    if (ticketData?.ticket) {
+      // Format date
+      setDate(new Date(ticketData!.ticket!.date).toLocaleString());
+
+      // Set status
+      switch (ticketData!.ticket.status) {
+        case Status.Closed:
+          setStatus("Closed");
+          break;
+        case Status.Unassigned:
+          setStatus("Unassigned");
+          break;
+        case Status.AwaitingTechniciansResponse:
+          setStatus("Awaiting Technician Response");
+          break;
+        case Status.AwaitingUserResponse:
+          setStatus("Awaiting User Response");
+          break;
+      }
+    }
+
+    if (ticketData?.ticket.assigned_id !== "") {
+      setAssignedTech(ticketData?.assignedTech);
+    }
+
+    assignableCheck();
+  }, [ticketData, userRole, userid, username, assignedTech, ticketChangeCount]);
+
+  // Assign ticket
+  const assignTicketHandler = async () => {
+    const response = await fetch("/api/tickets/assign", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ticketid: ticketData!.ticket._id }),
+    });
+
+    const data = await response.json();
+
+    if (response.status !== 200) {
+      setError(data.message);
+    }
+    setTicketChangeCount((num) => num + 1);
+    setAssignedTech(data.assignedTech);
+  };
+
+  const unassignTicketHandler = async () => {
+    const response = await fetch("/api/tickets/unassign", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ticketid: ticketData!.ticket._id }),
+    });
+
+    const data = await response.json();
+
+    if (response.status !== 200) {
+      setError(data.message);
+    }
+
+    setTicketChangeCount((num) => num + 1);
+    setAssignedTech(null);
+  };
 
   /**
    * Return main profile page
@@ -111,14 +174,22 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
             </div>
             {assignableStatus == "assignable" && (
               <div className="ticket-grid-btnfield">
-                <Button icon="add">Assign as Tech</Button>
+                <Button onClick={assignTicketHandler} icon="add">
+                  Assign as Tech
+                </Button>
               </div>
             )}
             {assignableStatus == "assigned" && (
               <div className="ticket-grid-btnfield">
-                <Button icon="minus">Unassign</Button>
+                <Button onClick={unassignTicketHandler} icon="minus">
+                  Unassign
+                </Button>
               </div>
             )}
+            <div className="ticket-grid-header">Assigned Tech</div>
+            <div className="ticket-grid-shortfield">
+              {assignedTech ? assignedTech.username : "None"}
+            </div>
             <div className="ticket-grid-header">Ticket Number</div>
             <div className="ticket-grid-shortfield">
               {ticketData?.ticket.number}
@@ -144,6 +215,14 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
                   {ticketData?.ticket.steps}
                 </div>
               </>
+            )}
+            {ticketData?.ticket && (
+              <Posts
+                userid={userid}
+                username={username}
+                userRole={userRole}
+                ticket={ticketData.ticket}
+              />
             )}
           </div>
         )}

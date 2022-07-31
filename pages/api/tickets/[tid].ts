@@ -33,7 +33,15 @@ const GetTicket = async (req: NextApiRequest, res: NextApiResponse) => {
         _id: ticket?.poster_id,
       });
 
-      res.status(200).send({ user: user, ticket: ticket });
+      // Get assigned tech if there is one
+      let assignedTech: ISecuredUser | null = null;
+      if (ticket?.assigned_id !== "") {
+        assignedTech = await User.findOne({ _id: ticket?.assigned_id });
+      }
+
+      res
+        .status(200)
+        .send({ user: user, ticket: ticket, assignedTech: assignedTech });
     } catch (err) {
       /**
        * Determine type of error object before returning error

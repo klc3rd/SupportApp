@@ -8,15 +8,19 @@ interface ITextarea {
   name: string;
   onChange?: () => void;
   ref?: React.Ref<HTMLTextAreaElement>;
+  disabled?: boolean;
+  placeholder?: string;
   children?: string;
 }
 
 const TextArea: React.FC<ITextarea> = React.forwardRef((props, ref) => {
-  const { name, onChange, children } = props;
+  const { name, onChange, disabled, placeholder, value, children } = props;
   return (
     <textarea
       name={name}
       onChange={onChange}
+      disabled={disabled}
+      placeholder={placeholder}
       className="form-textarea"
       ref={ref}
     >

@@ -13,4 +13,13 @@ declare module "ticket-types" {
     steps?: string;
     status?: number;
   }
+
+  // Posts are responses to tickets
+  interface IPost {
+    _id?: string;
+    ticket_id: string;
+    poster_id: string;
+    date: string;
+    message: string;
+  }
 }

@@ -24,12 +24,46 @@
 
     &-btnfield {
       grid-column: 3 / 4;
+      grid-row: 1 / 3;
     }
 
     &-field {
       grid-column: 2 / 4;
       padding: 0.5rem;
       color: $color-secondary-300;
+    }
+  }
+
+  &-divider {
+    display: flex;
+    border: 1px dashed $color-secondary-100;
+    align-items: flex-end;
+  }
+
+  &-post {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  &-postfield {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+
+    button {
+      box-shadow: 1px 1px 10px rgba($color-black, 0.75);
+    }
+
+    span {
+      margin-right: 2rem;
+    }
+
+    &-btnbox {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
   }
 }
