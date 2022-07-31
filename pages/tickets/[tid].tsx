@@ -32,9 +32,6 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
   const [status, setStatus] = useState<string | null>(null);
   const [date, setDate] = useState<string | null>(null);
   const [assignableStatus, setAssignableStatus] = useState<string | null>(null);
-  const [assignedTech, setAssignedTech] = useState<
-    ISecuredUser | null | undefined
-  >(null);
 
   // There are circular dependencies in the useEffects, this is to remove that
   // giving a way for them to refresh without causing issues
@@ -62,15 +59,7 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
 
     getTicket();
     // getPostData();
-  }, [
-    status,
-    assignedTech,
-    ticket_id,
-    userRole,
-    userid,
-    username,
-    ticketChangeCount,
-  ]);
+  }, [status, ticket_id, userRole, userid, username, ticketChangeCount]);
 
   /**
    * Get post data
@@ -114,12 +103,8 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
       }
     }
 
-    if (ticketData?.ticket.assigned_id !== "") {
-      setAssignedTech(ticketData?.assignedTech);
-    }
-
     assignableCheck();
-  }, [ticketData, userRole, userid, username, assignedTech, ticketChangeCount]);
+  }, [ticketData, userRole, userid, username, ticketChangeCount]);
 
   // Assign ticket
   const assignTicketHandler = async () => {
@@ -137,7 +122,6 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
       setError(data.message);
     }
     setTicketChangeCount((num) => num + 1);
-    setAssignedTech(data.assignedTech);
   };
 
   const unassignTicketHandler = async () => {
@@ -156,7 +140,6 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
     }
 
     setTicketChangeCount((num) => num + 1);
-    setAssignedTech(null);
   };
 
   /**
@@ -188,7 +171,9 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
             )}
             <div className="ticket-grid-header">Assigned Tech</div>
             <div className="ticket-grid-shortfield">
-              {assignedTech ? assignedTech.username : "None"}
+              {ticketData?.assignedTech
+                ? ticketData.assignedTech.username
+                : "None"}
             </div>
             <div className="ticket-grid-header">Ticket Number</div>
             <div className="ticket-grid-shortfield">
