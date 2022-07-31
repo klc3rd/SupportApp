@@ -217,6 +217,8 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
                 username={username}
                 userRole={userRole}
                 ticket={ticketData.ticket}
+                currentChangeCount={ticketChangeCount}
+                changeCounter={setTicketChangeCount}
               />
             )}
           </div>

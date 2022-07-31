@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Session, unstable_getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
+import Ticket from "../../../../lib/db/schemas/Ticket";
+import Status from "../../../../lib/enums/ticket-status";
 import Post from "../../../../lib/db/schemas/Post";
 
 import Err from "../../../../lib/Err";
@@ -15,7 +17,7 @@ const Posts = async (req: NextApiRequest, res: NextApiResponse) => {
       );
 
       // Stores if this is a user or a tech posting
-      let postingStatus = "user";
+      let postingStatus = Status.AwaitingTechniciansResponse;
 
       const userid = session?.user.id;
       const poster_id = req.body.poster_id;
@@ -30,9 +32,9 @@ const Posts = async (req: NextApiRequest, res: NextApiResponse) => {
 
       // If user is not the poster, or assigned tech, throw error
       if (userid == poster_id) {
-        postingStatus = "user";
+        postingStatus = Status.AwaitingTechniciansResponse;
       } else if (isTech && userid !== poster_id) {
-        postingStatus = "tech";
+        postingStatus = Status.AwaitingUserResponse;
       } else {
         throw new Err(422, "You do not have permission to post to this ticket");
       }
@@ -43,6 +45,9 @@ const Posts = async (req: NextApiRequest, res: NextApiResponse) => {
         date: date,
         message: message,
       });
+
+      // Update ticket status
+      await Ticket.updateOne({ _id: ticket_id }, { status: postingStatus });
 
       const response = await newPost.save();
 

@@ -13,10 +13,12 @@ interface IPostsPage {
   username: string;
   userRole: string;
   ticket: ITicket;
+  currentChangeCount: number;
+  changeCounter: (num: number) => void;
 }
 
 const Posts: React.FC<IPostsPage> = (props) => {
-  const { userid, ticket } = props;
+  const { userid, ticket, currentChangeCount, changeCounter } = props;
 
   const [posts, setPosts] = useState<IPost | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -65,6 +67,9 @@ const Posts: React.FC<IPostsPage> = (props) => {
     }
 
     postRef.current.value = "";
+
+    // This counter is to trigger refresh in parent component
+    changeCounter(currentChangeCount + 1);
   };
 
   /**
