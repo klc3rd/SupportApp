@@ -36,7 +36,15 @@ const GetTicket = async (req: NextApiRequest, res: NextApiResponse) => {
       // Get assigned tech if there is one
       let assignedTech: ISecuredUser | null = null;
       if (ticket?.assigned_id !== "") {
-        assignedTech = await User.findOne({ _id: ticket?.assigned_id });
+        let tempUser = await User.findOne({ _id: ticket?.assigned_id });
+
+        // Modify return tech so the password hash is not returned
+        assignedTech = {
+          id: tempUser!.id,
+          username: tempUser!.username,
+          email: tempUser!.email,
+          role: tempUser!.role,
+        };
       }
 
       res

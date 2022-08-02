@@ -21,6 +21,7 @@ const Posts = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const userid = session?.user.id;
       const poster_id = req.body.poster_id;
+      const ticket_poster = req.body.ticket_poster;
       const ticket_id = req.body.ticket_id;
       const assigned_id = req.body.assigned_id;
       const date = new Date();
@@ -31,9 +32,9 @@ const Posts = async (req: NextApiRequest, res: NextApiResponse) => {
       const isTech = userid === assigned_id;
 
       // If user is not the poster, or assigned tech, throw error
-      if (userid == poster_id) {
+      if (userid == ticket_poster) {
         postingStatus = Status.AwaitingTechniciansResponse;
-      } else if (isTech && userid !== poster_id) {
+      } else if (isTech && userid !== ticket_poster) {
         postingStatus = Status.AwaitingUserResponse;
       } else {
         throw new Err(422, "You do not have permission to post to this ticket");

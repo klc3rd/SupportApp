@@ -19,9 +19,17 @@ const GetUser = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
       const userid = req.query.uid;
-      const user: ISecuredUser | null = await User.findOne({
+      const tempUser: ISecuredUser | null = await User.findOne({
         _id: userid,
       });
+
+      // Modify return tech so the password hash is not returned
+      const user = {
+        id: tempUser!.id,
+        username: tempUser!.username,
+        email: tempUser!.email,
+        role: tempUser!.role,
+      };
 
       res.status(200).send(user);
     } catch (err) {
