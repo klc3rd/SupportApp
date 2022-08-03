@@ -30,6 +30,8 @@ const GetTickets = async (req: NextApiRequest, res: NextApiResponse) => {
       if (role === "admin" || role === "tech") {
         if (status == Status.All) {
           tickets = await Ticket.find();
+        } else if (status == Status.Open) {
+          tickets = await Ticket.find({ status: { $ne: Status.Closed } });
         } else {
           tickets = await Ticket.find({ status: status });
         }
@@ -37,6 +39,11 @@ const GetTickets = async (req: NextApiRequest, res: NextApiResponse) => {
         if (status == Status.All) {
           tickets = await Ticket.find({
             poster_id: poster_id,
+          });
+        } else if (status == Status.Open) {
+          tickets = await Ticket.find({
+            poster_id: poster_id,
+            status: { $ne: Status.Closed },
           });
         } else {
           tickets = await Ticket.find({

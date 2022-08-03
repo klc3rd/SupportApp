@@ -61,6 +61,13 @@ const IndexPage: React.FC<IIndexPage> = (props) => {
   };
 
   /**
+   * Passable function that changes the filter
+   */
+  const onFilterChange = (status: Status) => {
+    setFilter(status);
+  };
+
+  /**
    * Return main page
    */
 
@@ -68,7 +75,11 @@ const IndexPage: React.FC<IIndexPage> = (props) => {
     <MainContainer role={role}>
       <>
         {addRequest && <AddRequest closeHandler={closeAddRequest} />}
-        <MainPanel submitRequestHandler={submitRequestHandler} tickets={[]} />
+        <MainPanel
+          onFilterChange={onFilterChange}
+          submitRequestHandler={submitRequestHandler}
+          tickets={[]}
+        />
         <div className="main-status">
           {isLoading && `Loading...`}
           {!isLoading && tickets.length === 0 && `No tickets found`}

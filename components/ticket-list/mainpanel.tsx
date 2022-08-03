@@ -3,10 +3,12 @@
  */
 import { useState, useEffect } from "react";
 import Button from "../ui/button";
+import Status from "../../lib/enums/ticket-status";
 import { ITicket } from "ticket-types";
 
 interface IMainPanel {
   tickets: ITicket[];
+  onFilterChange: (status: Status) => void;
   submitRequestHandler: () => void;
 }
 
@@ -19,7 +21,7 @@ interface ITicketCounts {
 }
 
 const MainPanel: React.FC<IMainPanel> = (props) => {
-  const { submitRequestHandler } = props;
+  const { submitRequestHandler, onFilterChange } = props;
   const [counts, setCounts] = useState<ITicketCounts | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,25 +53,50 @@ const MainPanel: React.FC<IMainPanel> = (props) => {
           {error && <span className="error">{error}</span>}
           {!error && (
             <div>
-              <span className="main-panel-link">
+              <span
+                className="main-panel-link"
+                onClick={() => {
+                  onFilterChange(Status.All);
+                }}
+              >
                 Total - {counts?.totalTickets}
               </span>
               |
-              <span className="main-panel-link">
+              <span
+                className="main-panel-link"
+                onClick={() => {
+                  onFilterChange(Status.Open);
+                }}
+              >
                 Open - {counts?.openTickets}
               </span>
               |
-              <span className="main-panel-link">
+              <span
+                className="main-panel-link"
+                onClick={() => {
+                  onFilterChange(Status.AwaitingUserResponse);
+                }}
+              >
                 Awaiting User Response - {counts?.awaitingUsersResponse}
               </span>
               |
-              <span className="main-panel-link">
-                Awaiting Technician Response -
+              <span
+                className="main-panel-link"
+                onClick={() => {
+                  onFilterChange(Status.AwaitingTechniciansResponse);
+                }}
+              >
+                Awaiting Technician Response -{" "}
                 {counts?.awaitingTechniciansResponse}
               </span>
               |
-              <span className="main-panel-link">
-                Closed -{counts?.closedTickets}
+              <span
+                className="main-panel-link"
+                onClick={() => {
+                  onFilterChange(Status.Closed);
+                }}
+              >
+                Closed - {counts?.closedTickets}
               </span>
             </div>
           )}
