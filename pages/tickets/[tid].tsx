@@ -41,11 +41,6 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
   const router = useRouter();
   const ticket_id = router.query.tid;
 
-  const yourTicketStatus =
-    !assignableStatus &&
-    ticketData?.ticket.poster_id === userid &&
-    userRole !== "user";
-
   /**
    *  Retrieve ticket
    */
@@ -202,7 +197,9 @@ const TicketPage: React.FC<ITicketPage> = (props) => {
             <div className="ticket-grid-header">Status</div>
             <div className="ticket-grid-shortfield">{status}</div>
             <div className="ticket-grid-header">Issue</div>
-            <div className="ticket-grid-field">{ticketData?.ticket.issue}</div>
+            <div className="ticket-grid-field ticket-grid-seperator">
+              {ticketData?.ticket.issue}
+            </div>
             {ticketData?.ticket.steps && (
               <>
                 <div className="ticket-grid-header">Steps</div>

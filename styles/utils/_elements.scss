@@ -178,6 +178,8 @@ $form-shadow: 1px 1px 10px rgba($color-black, 0.05);
 
     &-link,
     &-link:active {
+      @include font-paragraph(300);
+      margin: 0 1rem;
       color: $color-primary-300;
       cursor: pointer;
     }

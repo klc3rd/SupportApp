@@ -1,0 +1,46 @@
+.post {
+  display: grid;
+  grid-template-columns: 6em 1fr;
+  width: 100%;
+
+  &-date {
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+  }
+
+  &-message {
+    display: flex;
+    align-items: flex-start;
+    grid-column: 1 / -1;
+    padding: 0 0 1rem 0;
+
+    &-text {
+      padding: 1rem;
+    }
+  }
+
+  &-divider {
+    margin-bottom: 5rem;
+  }
+
+  &-edit {
+    width: 100%;
+
+    &-btnbox {
+      display: flex;
+      margin: 0.5rem;
+      justify-content: flex-end;
+      flex-direction: row;
+
+      @media (max-width: $screen-width-small) {
+        gap: 1rem;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+
+      button {
+        box-shadow: 1px 1px 10px rgba($color-black, 0.75);
+      }
+    }
+  }
+}

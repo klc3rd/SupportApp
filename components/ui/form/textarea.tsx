@@ -23,9 +23,8 @@ const TextArea: React.FC<ITextarea> = React.forwardRef((props, ref) => {
       placeholder={placeholder}
       className="form-textarea"
       ref={ref}
-    >
-      {children}
-    </textarea>
+      defaultValue={children}
+    />
   );
 });
 

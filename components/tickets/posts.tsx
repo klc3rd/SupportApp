@@ -165,11 +165,18 @@ const Posts: React.FC<IPostsPage> = (props) => {
         <div className="ticket-post">
           {!posts && "No posts found"}
           {posts &&
-            posts.map((post) => <PostLine key={post._id} post={post} />)}
+            posts.map((post) => (
+              <PostLine
+                key={post._id}
+                currentChangeCount={currentChangeCount}
+                changeCounter={changeCounter}
+                userid={userid}
+                post={post}
+              />
+            ))}
         </div>
       </div>
       <div className="ticket-grid-field">
-        <hr className="ticket-divider" />
         <div className="ticket-postfield">
           {!canPost &&
             ticket.status !== Status.Closed &&
