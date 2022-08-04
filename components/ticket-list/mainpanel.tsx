@@ -43,6 +43,9 @@ const MainPanel: React.FC<IMainPanel> = (props) => {
     getCounts();
   }, []);
 
+  /**
+   * function to change status when using a drop down selection menu
+   */
   const changeStatusMenu = () => {
     const statusVal = selectRef.current?.value;
     const newStatus: Status = parseInt(statusVal!);
