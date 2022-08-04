@@ -1,6 +1,6 @@
 # Project - Tech Support App
 
-# Creator – Kenneth Cluck
+Creator – Kenneth Cluck
 
 ## Summary
 
