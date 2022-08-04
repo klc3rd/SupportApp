@@ -35,14 +35,14 @@ const PostLine: React.FC<IPostLine> = (props) => {
     };
 
     getUser();
-  }, [post.poster_id, userid]);
+  }, [post.poster_id]);
 
   useEffect(() => {
     // Should use be able to edit this post?
     if (post?.poster_id === userid) {
       setEditable(true);
     }
-  }, [post]);
+  }, [post, userid]);
 
   // Submit post edit handler
   const submitHandler = async () => {
