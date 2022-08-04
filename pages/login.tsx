@@ -116,6 +116,19 @@ const LoginPage: React.FC = () => {
             <Link href="/signup">
               <span className="auth-link">Not a user? Register here</span>
             </Link>
+            <div className="demo-msg">
+              <p />
+              This app is in demo mode. There are disabled features to ensure
+              this login info works.
+              <p />
+              Demo Admin/Tech Username - admin
+              <br />
+              Demo Password - password
+              <p />
+              User Username - user
+              <br />
+              User Password - password
+            </div>
           </div>
         </div>
       </div>

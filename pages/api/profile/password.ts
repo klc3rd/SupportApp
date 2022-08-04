@@ -10,6 +10,8 @@ import Err from "../../../lib/Err";
 import { getUserByID } from "../../../lib/db/users/info";
 import bcrypt from "bcryptjs";
 
+const DEMO_MODE = process.env.DEMO_MODE;
+
 const EditPassword = async (req: NextApiRequest, res: NextApiResponse) => {
   /**
    * Get currently logged in user's info, the reason for this rather than using
@@ -28,6 +30,11 @@ const EditPassword = async (req: NextApiRequest, res: NextApiResponse) => {
       const newPassword = req.body.newPassword;
 
       const foundUser: IUser | null = await getUserByID(session.user.id);
+
+      // If in demo mode, return error
+      if (DEMO_MODE == "true") {
+        throw new Err(422, "This feature is disabled in demo mode");
+      }
 
       // Check that the old password matches
       if (!bcrypt.compareSync(oldPassword, foundUser!.password)) {

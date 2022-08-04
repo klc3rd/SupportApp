@@ -41,8 +41,6 @@ const AdminIndex: React.FC<IAdminIndex> = (props) => {
   // Delete user
   const deleteUserHandler = async (userid: string) => {
     // Add this later
-    console.log(`Running delete user on user ${userid}`);
-
     const response = await fetch("/api/admin/deleteuser", {
       method: "DELETE",
       headers: {
@@ -61,6 +59,13 @@ const AdminIndex: React.FC<IAdminIndex> = (props) => {
   };
 
   /**
+   * Making a more easily passable function that sets the error
+   */
+  const onError = (message: string) => {
+    setError(message);
+  };
+
+  /**
    * Return main profile page
    */
   return (
@@ -75,6 +80,7 @@ const AdminIndex: React.FC<IAdminIndex> = (props) => {
           <AdminPanel
             users={users}
             onDelete={deleteUserHandler}
+            onError={onError}
             currentUser={username}
           />
         )}

@@ -218,3 +218,8 @@ $form-shadow: 1px 1px 10px rgba($color-black, 0.05);
     text-align: center;
   }
 }
+
+.demo-msg {
+  @include font-paragraph(300);
+  color: $color-primary-300;
+}

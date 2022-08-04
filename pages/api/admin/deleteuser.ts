@@ -5,6 +5,8 @@ import Tickets from "../../../lib/db/schemas/Ticket";
 import Err from "../../../lib/Err";
 import { authOptions } from "../auth/[...nextauth]";
 
+const DEMO_MODE = process.env.DEMO_MODE;
+
 const DeleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "DELETE") {
     try {
@@ -12,6 +14,10 @@ const DeleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
 
       if (!session || session.user.role !== "admin") {
         throw new Err(422, "You must be logged in with an admin account");
+      }
+
+      if (DEMO_MODE == "true") {
+        throw new Err(422, "This feature is disabled in demo mode");
       }
 
       const userid = req.body.userid;

@@ -5,11 +5,12 @@ import SmallButton from "../ui/small-button";
 interface IUserItem {
   user: ISecuredUser;
   currentUser: string;
+  onError: (message: string) => void;
   onDelete: (userid: string) => Promise<void>;
 }
 
 const UserItem: React.FC<IUserItem> = (props) => {
-  const { user, currentUser, onDelete } = props;
+  const { user, currentUser, onError, onDelete } = props;
 
   const [deleteStatus, setDeleteStatus] = useState<boolean>(false);
 
@@ -39,7 +40,8 @@ const UserItem: React.FC<IUserItem> = (props) => {
     const data = await response.json();
 
     if (response.status !== 200) {
-      console.log(data.message);
+      onError(data.message);
+      return;
     }
   };
 

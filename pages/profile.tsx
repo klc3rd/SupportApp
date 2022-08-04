@@ -81,6 +81,7 @@ const Profile: React.FC<IProfile> = (props) => {
         setError("Email is in use");
       } else {
         setError(data.message);
+        return;
       }
     }
 

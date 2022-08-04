@@ -1,7 +1,6 @@
 /**
  * This is the admin panel, used for managing users
  */
-import { SetStateAction, Dispatch } from "react";
 import { ISecuredUser } from "user-types";
 
 import UserItem from "./useritem";
@@ -9,11 +8,12 @@ import UserItem from "./useritem";
 interface IAdminPanel {
   users: ISecuredUser[] | null;
   currentUser: string;
+  onError: (message: string) => void;
   onDelete: (userid: string) => Promise<void>;
 }
 
 const AdminPanel: React.FC<IAdminPanel> = (props) => {
-  const { users, currentUser, onDelete } = props;
+  const { users, currentUser, onError, onDelete } = props;
 
   return (
     <div className="admin-panel">
@@ -26,6 +26,7 @@ const AdminPanel: React.FC<IAdminPanel> = (props) => {
             key={user._id}
             user={user}
             currentUser={currentUser}
+            onError={onError}
             onDelete={onDelete}
           />
         );
