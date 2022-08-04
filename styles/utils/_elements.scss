@@ -156,6 +156,20 @@ $form-shadow: 1px 1px 10px rgba($color-black, 0.05);
     display: flex;
     margin: 2rem auto;
 
+    &-box {
+      @media (max-width: $screen-width-medium) {
+        display: none;
+      }
+    }
+
+    &-minibox {
+      display: none;
+
+      @media (max-width: $screen-width-medium) {
+        display: inline-block;
+      }
+    }
+
     @media (max-width: $screen-width-small) {
       flex-direction: column;
     }
@@ -186,6 +200,14 @@ $form-shadow: 1px 1px 10px rgba($color-black, 0.05);
 
     &-link:hover {
       color: $color-primary-200;
+    }
+
+    &-select {
+      @include font-paragraph(300);
+      border: 1px solid $color-secondary-300;
+      background-color: $color-grey-100;
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
     }
   }
 
