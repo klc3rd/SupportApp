@@ -52,7 +52,7 @@ const Posts: React.FC<IPostsPage> = (props) => {
     };
 
     getPosts();
-  }, [currentChangeCount]);
+  }, [currentChangeCount, ticket._id]);
 
   /**
    * Submit post/response

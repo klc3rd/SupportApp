@@ -35,7 +35,7 @@ const PostLine: React.FC<IPostLine> = (props) => {
     };
 
     getUser();
-  }, []);
+  }, [post.poster_id, userid]);
 
   useEffect(() => {
     // Should use be able to edit this post?
