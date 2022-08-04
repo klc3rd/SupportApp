@@ -1,34 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Project - Tech Support App
+Creator – Kenneth Cluck
 
-## Getting Started
+## Summary
 
-First, run the development server:
+This application is a basic tech support ticketing system. Anyone can submit support tickets. Users that are admins or technicians can take over the ticket to respond to these tickets. Admins and technicians can also close out tickets. Closed tickets can still be reopened.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Usage
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+There are two default logins for the demo. There is an admin user with the username “admin” and the password of “password”. There is a standard user login with the username “user” and the password of “password”. There is no technician demo account, however the admin account has identical access, as well as the ability to modify users.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Differences in the live demo
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+The live demo is in a demo mode. In this changing passwords and user role is disabled. The purpose of this is to ensure the default login information logs in and has proper access. Account email addresses are not visible the admin for the privacy of anyone that registers.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Challenges faced
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This is my first NextJS project. While I have made projects in React, NextJS was a new experience. My biggest challenge was configuring Next-Auth. I have worked with OAuth before but since I was using NextJS I decided to use the standard solution for user authentication. While this made authentication significantly easier, I had to learn how to configure Next-Auth. The guide I used to learn Next-Auth was outdated and configuration options were not all valid. I had to read several pages of the project website to complete configuration.
