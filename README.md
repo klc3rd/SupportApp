@@ -4,7 +4,7 @@ Creator – Kenneth Cluck
 
 ## Summary
 
-This application is a basic tech support ticketing system. Anyone can submit support tickets. Users that are admins or technicians can take over the ticket to respond to these tickets. Admins and technicians can also close out tickets. Closed tickets can still be reopened.
+This application is a basic tech support ticketing system. Anyone can submit support tickets. Users that are admins or technicians can take over the ticket to respond to these tickets. Admins and technicians can also close out tickets. Closed tickets can still be reopened, either by the ticket creator or a admin/technician.
 
 ## Usage
 
@@ -12,7 +12,7 @@ There are two default logins for the demo. There is an admin user with the usern
 
 ## Differences in the live demo
 
-The live demo is in a demo mode. In this changing passwords and user role is disabled. The purpose of this is to ensure the default login information logs in and has proper access. Account email addresses are not visible the admin for the privacy of anyone that registers.
+The live demo is in a demo mode. In this changing passwords and user role is disabled. The purpose of this is to ensure the default login information logs in and has proper access. Account email addresses are not visible the admin for the privacy of anyone that registers a new user.
 
 ## Challenges faced
 
